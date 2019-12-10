@@ -1,0 +1,44 @@
+#!/bin/bash
+
+CONTAINER_NAME=$1
+
+if [[ $CONTAINER_NAME == "" ]]
+then
+  echo "Start an ml-container"
+  echo -e "\nUsage: mlc-start container_name\n"
+  exit -1
+fi
+
+function check_container_exists {
+  docker container ps -a --filter=name=^/$1$ --filter=label=aime.mlc --format "{{.Names}}"
+}
+
+function check_container_running {
+  docker container ps --filter=name=^/$1$ --filter=label=aime.mlc --format "{{.Names}}"
+}
+
+if [[ $CONTAINER_NAME != $(check_container_exists $CONTAINER_NAME) ]]
+then
+  echo "["$CONTAINER_NAME"] does not exist."
+  exit -3
+fi
+
+if [[ $CONTAINER_NAME == $(check_container_running $CONTAINER_NAME) ]]
+then
+  echo "["$CONTAINER_NAME"] container already running"
+  exit -3  
+fi
+
+echo -e "\n["$CONTAINER_NAME"] Starting container ..."
+
+USER_ID=$(id -u)
+GROUP_ID=$(id -g)
+OUT=$(docker start $CONTAINER_NAME)
+EXIT_CODE=$?
+
+if [[ $OUT == $CONTAINER_NAME ]]
+then
+  echo -e "["$CONTAINER_NAME"] container started.\n\nTo open a shell to container use: mlc-open $CONTAINER_NAME"
+else
+  echo -e "["$CONTAINER_NAME"] Error Starting Container."
+fi

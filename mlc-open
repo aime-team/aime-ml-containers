@@ -1,0 +1,72 @@
+#!/bin/bash
+
+CONTAINER_NAME=$1
+
+if [[ $CONTAINER_NAME == "" ]]
+then
+  echo "Open an ml-container"
+  echo -e "\nUsage: mlc-open container_name\n"
+  exit -1
+fi
+
+function check_container_exists {
+  docker container ps -a --filter=name=^/$1$ --filter=label=aime.mlc --format "{{.Names}}"
+}
+
+function check_container_running {
+  docker container ps --filter=name=^/$1$ --filter=label=aime.mlc --format "{{.Names}}"
+}
+
+function get_container_active {  
+  #docker stats --format "{{.Name}} {{.PIDs}}" --no-stream
+  OUT=$(docker top $1 -o pid 2>/dev/null )
+  EXIT_CODE=$?
+  OUT=$(echo -e "$OUT" | wc -l)
+#  echo "Returned: $EXIT_CODE $OUT"
+  if [ $EXIT_CODE == "0" ] && [ $OUT -gt 3 ]
+  then
+    echo "True"
+  else
+    echo "False"
+  fi
+}
+
+if [[ $CONTAINER_NAME != $(check_container_exists $CONTAINER_NAME) ]]
+then
+  echo "["$CONTAINER_NAME"] does not exist."
+  exit -3
+fi
+
+if [[ $CONTAINER_NAME != $(check_container_running $CONTAINER_NAME) ]]
+then
+  echo "["$CONTAINER_NAME"] starting container"
+  docker container start $CONTAINER_NAME >> /dev/null
+else
+  echo "["$CONTAINER_NAME"] container already running"
+fi
+
+echo "["$CONTAINER_NAME"] opening shell to container"
+
+#docker container attach $CONTAINER_NAME
+USER_ID=$(id -u)
+GROUP_ID=$(id -g)
+docker exec -it --user $USER_ID:$GROUP_ID $CONTAINER_NAME bash
+EXIT_CODE=$?
+
+if [[ $EXIT_CODE == 1 ]]
+then
+  echo "["$CONTAINER_NAME"] detached from container, container keeps running"
+else
+  echo "["$CONTAINER_NAME"] container shell closed."
+fi
+
+ACTIVE=$(get_container_active $CONTAINER_NAME)
+
+if [ $ACTIVE == "True" ]
+then
+  echo "["$CONTAINER_NAME"] container is active, keeped running."
+else
+  echo "["$CONTAINER_NAME"] container is inactive, stopping container ..."
+  RESULT=$(docker container stop $CONTAINER_NAME)
+  echo -e "["$CONTAINER_NAME"] container stopped.\n"  
+fi

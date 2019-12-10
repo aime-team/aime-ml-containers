@@ -1,0 +1,10 @@
+#!/bin/bash
+
+echo -e "\nRunning ml-containers are:\n"
+
+
+OUTPUT=$(docker container stats --format "table [{{.Name}}]\t{{.CPUPerc}}\t{{.MemUsage}}" --no-stream
+echo -e "")
+
+echo "${OUTPUT/\[NAME\]   /CONTAINER}"
+echo ""

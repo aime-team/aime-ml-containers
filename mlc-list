@@ -1,0 +1,7 @@
+#!/bin/bash
+
+echo -e "\nAvailable ml-containers are:\n"
+
+OUTPUT=$(docker container ls -a --filter=label=aime.mlc --format "table [{{.Names}}]\t{{.Label \"aime.mlc.FRAMEWORK\"}}\t{{.Status}}")
+echo "${OUTPUT/\[NAMES\]  /CONTAINER}"-
+echo -e ""

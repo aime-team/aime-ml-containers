@@ -1,0 +1,206 @@
+#!/bin/bash
+
+INTERACTIVE=false
+GPUS="all"
+SUPPORTED_ARCH="CUDA"
+WORKSPACE_MOUNT=$HOME/workspace
+
+ARGS=()
+
+for i in "$@"
+do
+case $i in
+    -i|--interactive)
+    INTERACTIVE=true
+    ;;
+    -g=*|--gpus=*)
+    GPUS="${i#*=}"
+    ;;
+    -w=*|--workspace=*)
+    WORKSPACE_MOUNT="${i#*=}"
+    ;;    
+    -*)
+    echo "Unknown option: $i"
+    exit -1
+    ;;
+    *)
+    ARGS+=($i)
+          # unknown option
+    ;;
+esac
+done
+
+CONTAINER_NAME=${ARGS[0]}
+FRAMEWORK_NAME=${ARGS[1]}
+FRAMEWORK_VERSION=${ARGS[2]}
+
+declare -A IMAGES
+declare -A FRAMEWORK_ENTRIES
+
+function join() {
+    local separator=$1 values=$2
+    shift 2 || shift $(($#))
+    printf "%s" "$values${@/#/$separator}"
+}
+
+function check_container_exists {
+  docker container ps -a --filter=name=$1 --filter=label=aime.mlc --format "{{.Names}}"
+}
+
+function read_repo {
+  REPO_FILE=$1
+  while IFS=',' read framework ver arch repo reserverd 
+   do
+     framework=$(echo $framework | xargs) 
+     ver=$(echo $ver | xargs) 
+     arch=$(echo $arch | xargs)
+     image=$(echo $image | xargs)
+#     echo "'$framework' '$ver' $arch $repo"
+     if [[ $arch == $SUPPORTED_ARCH ]]
+     then
+       entry=0
+       if [[ -v "FRAMEWORK_ENTRIES[$framework]" ]] 
+       then
+         entry=$((${FRAMEWORK_ENTRIES[$framework]} + 1))  
+       fi
+       FRAMEWORK_ENTRIES[$framework]=$entry
+       IMAGES[$framework,$entry,version]=$ver
+       IMAGES[$framework,$entry,repo]=$repo 
+     fi
+   done < $REPO_FILE
+}
+
+function get_frameworks {
+  echo $(join ", " ${!FRAMEWORK_ENTRIES[@]})
+}
+
+function get_framework_versions {
+  SEARCH_FRAMEWORK=$1
+
+  for K in "${!FRAMEWORK_ENTRIES[@]}" 
+  do
+    if [[ $K == $SEARCH_FRAMEWORK ]]
+    then
+      entries=${FRAMEWORK_ENTRIES[$K]}
+      versions=() 
+      for i in $(seq 0 $entries);
+      do
+        versions+=( ${IMAGES[$K,$i,version]})
+      done
+      echo $(join ", " ${versions[@]})
+      return
+    fi
+  done
+}
+
+function find_image {
+  SEARCH_FRAMEWORK=$1
+  SEARCH_VERSION=$2
+
+  for K in "${!FRAMEWORK_ENTRIES[@]}" 
+  do
+    if [[ $K == $SEARCH_FRAMEWORK ]]
+    then
+      entries=${FRAMEWORK_ENTRIES[$K]}
+      versions=() 
+      for i in $(seq 0 $entries);
+      do
+        version=( ${IMAGES[$K,$i,version]})
+        if [[ $version == $SEARCH_VERSION ]]
+        then
+          image=${IMAGES[$K,$i,repo]}
+          echo $image
+          return
+        fi
+      done
+    fi
+  done
+}
+
+
+function print_help {
+  echo -e "\nCreate a new machine learning container" 
+  echo -e "\nUsage: mlc-create container_name framework version [-w=workspace]"
+
+  echo -e "\nAvailable Frameworks:\n\n$(get_frameworks)"
+
+  echo -e "\nAvailable Versions:\n"
+  for K in "${!FRAMEWORK_ENTRIES[@]}" 
+  do 
+    echo "$K: $(get_framework_versions $K)"
+  done
+
+  echo ""
+}
+
+
+read_repo ml_images.repo
+
+if [[ $CONTAINER_NAME == "" || $FRAMEWORK_NAME == "" ]]
+then
+  print_help
+  exit 0
+fi
+
+if [[ $CONTAINER_NAME == $(check_container_exists $CONTAINER_NAME) ]]
+then
+  echo -e "\nError: container ["$CONTAINER_NAME"] already exists."
+  exit -1
+fi
+
+
+available_frameworks="$(get_frameworks)"
+available_versions="$(get_framework_versions $FRAMEWORK_NAME)"
+if [[ $available_versions == "" ]]
+then
+  echo -e "\nError: unknown framework '$FRAMEWORK_NAME'"
+  echo -e "\nAvailable frameworks are: $available_frameworks"
+  exit -2
+fi
+
+IMAGE=$(find_image $FRAMEWORK_NAME $FRAMEWORK_VERSION)
+
+if [[ $IMAGE == "" ]]
+then
+  if [[ $FRAMEWORK_VERSION == "" ]]
+  then
+    echo -e "\nError: framework versions not specified"
+  else
+    echo -e "\nError: unavailable framework version '$FRAMEWORK_VERSION'"    
+  fi
+  echo -e "\nAvailable '$FRAMEWORK_NAME' versions are: $available_versions"
+  exit -3
+fi
+
+echo -e "\nCreating [$CONTAINER_NAME] with $FRAMEWORK_NAME $FRAMEWORK_VERSION"
+
+WORKSPACE_MOUNT=$(realpath $WORKSPACE_MOUNT)
+if [ -d "$WORKSPACE_MOUNT" ]; then
+  echo -e "\n/workspace will mount on '$WORKSPACE_MOUNT' - OK"
+else
+  echo -e "\nAborted.\n\nWorkspace directory not existing: $WORKSPACE_MOUNT"
+  echo -e "\nThe workspace directory will be mounted as /workspace in the container."
+  echo -e "It is the directory where your project data should be stored to be accessed\ninside the container."
+  echo -e "\nIt can be set to an existing directory with the option '-w=/your/workspace'\n"
+  exit -4
+fi
+
+
+echo -e "\nAcquiring container image ... \n"
+
+docker pull $IMAGE
+
+echo -e "\nSetting up container ... \n"
+
+CONTAINER_LABEL="aime.mlc"
+WORKSPACE=/workspace
+USER_ID=$(id -u)
+GROUP_ID=$(id -g)
+
+docker run -v $WORKSPACE_MOUNT:$WORKSPACE -w $WORKSPACE --name=$CONTAINER_NAME --label=$CONTAINER_LABEL=$USER --tty --privileged  --gpus=all --network=host --device /dev/video0 --device /dev/snd -e DISPLAY=unix$DISPLAY --shm-size=1g --ulimit memlock=-1 --ulimit stack=67108864 --volume $XAUTH:/root/.Xauthority -v /tmp/.X11-unix:/tmp/.X11-unix $IMAGE bash -c "echo \"export PS1='[$CONTAINER_NAME] \\\`whoami\\\`@\\\`hostname\\\`:\\\${PWD#*}$ '\" >> ~/.bashrc; apt-get update -y > /dev/null; apt-get install sudo git -q -y > /dev/null; addgroup --gid $GROUP_ID $USER > /dev/null; adduser --uid $USER_ID --gid $GROUP_ID $USER --disabled-password --gecos aime > /dev/null; passwd -d $USER; echo \"$USER ALL=(ALL) NOPASSWD: ALL\" > /etc/sudoers.d/${USER}_no_password; chmod 440 /etc/sudoers.d/${USER}_no_password; exit"
+OUT=$(docker commit $CONTAINER_NAME $IMAGE:$CONTAINER_NAME)
+OUT=$(docker rm $CONTAINER_NAME)
+
+OUT=$(docker create -it -v $HOME/workspace:$WORKSPACE -w $WORKSPACE --name=$CONTAINER_NAME --label=$CONTAINER_LABEL=$USER --label=$CONTAINER_LABEL.FRAMEWORK=$FRAMEWORK_NAME-$FRAMEWORK_VERSION --user $USER_ID:$GROUP_ID --tty --privileged --interactive --gpus=all --network=host --device /dev/video0 --device /dev/snd -e DISPLAY=unix$DISPLAY --shm-size=1g --ulimit memlock=-1 --ulimit stack=67108864 --volume $XAUTH:/root/.Xauthority -v /tmp/.X11-unix:/tmp/.X11-unix --group-add video --group-add sudo $IMAGE:$CONTAINER_NAME bash -c "echo \"export PS1='[$CONTAINER_NAME] \\\`whoami\\\`@\\\`hostname\\\`:\\\${PWD#*}$ '\" >> ~/.bashrc; bash")
+
+echo -e "\n[$CONTAINER_NAME] ready. Open the container with: mlc-open $CONTAINER_NAME\n"

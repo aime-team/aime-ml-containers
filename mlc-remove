@@ -1,0 +1,75 @@
+#!/bin/bash
+
+CONFIRMED=false
+
+ARGS=()
+
+for i in "$@"
+do
+case $i in
+    -Y|--yes)
+    CONFIRMED=true
+    ;;
+    -*)
+    echo "Unknown option: $i"
+    exit -1
+    ;;
+    *)
+    ARGS+=($i)
+          # unknown option
+    ;;
+esac
+done
+
+CONTAINER_NAME=${ARGS[0]}
+
+if [[ $CONTAINER_NAME == "" ]]
+then
+  echo -e "Remove an ml-container"
+  echo -e "\nUsage: mlc-remove container_name [-Y]\n"
+  exit -1
+fi
+
+function check_container_exists {
+  docker container ps -a --filter=name=^/$1$ --filter=label=aime.mlc --format "{{.Names}}"
+}
+
+function get_container_image {
+  docker container ps -a --filter=name=^/$1$ --filter=label=aime.mlc --format "{{.Image}}"
+}
+
+function check_container_running {
+  docker container ps --filter=name=^/$1$ --filter=label=aime.mlc --format "{{.Names}}"
+}
+
+if [[ $CONTAINER_NAME != $(check_container_exists $CONTAINER_NAME) ]]
+then
+  echo "["$CONTAINER_NAME"] does not exists."
+  exit -3
+fi
+
+if [[ $CONTAINER_NAME == $(check_container_running $CONTAINER_NAME) ]]
+then
+  echo -e "["$CONTAINER_NAME"] can not be removed: container is running\n"
+  echo -e "["$CONTAINER_NAME"] container has to be stopped before it can be removed."
+
+  exit -2
+fi
+
+echo -e "This will remove the container ["$CONTAINER_NAME"]."
+echo -e "WARNING: It will be deleted unrecoverable."
+echo -e ""
+
+read -p "Delete container? (Y/N) " -n 1 -r
+echo 
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+  CONTAINER_IMAGE=$(get_container_image $CONTAINER_NAME)
+  OUT=$(docker container rm $CONTAINER_NAME)
+  echo -e "Deleting Image: " $CONTAINER_IMAGE
+  OUT=$(docker image rm $CONTAINER_IMAGE)
+  echo -e "\n["$CONTAINER_NAME"] container removed.\n"
+else
+  exit 0
+fi
+
