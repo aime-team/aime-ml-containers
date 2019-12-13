@@ -20,7 +20,7 @@ Easily install, run and manage docker containers for the most common deep learni
 
 * multi GPU: allocate GPUs per user, container or session 
 
-* Runs with the same performance as bare metal installation
+* Runs with the same performance as a bare metal installation
 
-* Repository of all mayor deep learning framework versions as containers
+* Repository of all major deep learning framework versions as containers
 
