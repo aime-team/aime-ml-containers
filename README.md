@@ -105,7 +105,7 @@ CONTAINER           FRAMEWORK                  STATUS
 
 ### List active machine learning containers
 
-**mlc-stats** show all current running ml containers and there CPU and memory usage
+**mlc-stats** show all current running ml containers and their CPU and memory usage
 
 ```
 > mlc-stats
