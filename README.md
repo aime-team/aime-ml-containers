@@ -147,3 +147,10 @@ Warning: the container will be unrecoverable deleted only data stored in the /wo
 ```
 mlc-remove my-container
 ```
+
+
+## Installation
+
+AIME machines come pre installed with AIME machine learning container management system for more information see: https://www.aime.info
+
+
