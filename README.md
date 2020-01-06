@@ -117,7 +117,7 @@ CONTAINER           CPU %               MEM USAGE / LIMIT
 [tf1.15.0]          7.26%               9.242GiB / 63.36GiB
 ```
 
-### Start machine learning container
+### Start machine learning containers
 
 **mlc-start container_name** to explicitly start a container
 
