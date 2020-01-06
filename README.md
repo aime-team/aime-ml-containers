@@ -39,7 +39,7 @@ Pytorch: 1.3.0, 1.2.0, 1.1.0
 Example to create a container with the name 'my-container' as Tensorflow 1.15.0 with mounted user home directory as workspace use:
 
 ```
-> mlc-create my-container Tensorflow 1.15.0 -w=/home/username
+> mlc-create my-container Tensorflow 1.15.0 -w=/home/admin
 ```
 
 
@@ -69,7 +69,7 @@ _  /   /  __/  / / /(__  )/ /_/ /  /   _  __/   _  / / /_/ /_ |/ |/ /
 You are running this container as user with ID 1000 and group 1000,
 which should map to the ID and group for your user on the Docker host. Great!
 
-[my-container] username@aime01:/workspace$
+[my-container] admin@aime01:/workspace$
 ```
 
 The container is run with the access rights of the user. To use privileged rights like for installing packages with 'apt' within the container use 'sudo'. The default is that no password is needed for sudo, to change this behaviour set a password with 'passwd'.
