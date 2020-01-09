@@ -32,7 +32,7 @@ Available Versions:
 
 Tensorflow: 2.0.0, 1.15.0, 1.15, 1.14.0, 1.13.2
 
-Mxnet: 1.5.0, 1.4.0, 1.3.0
+Mxnet: 1.5.0, 1.4.1, 1.3.1
 
 Pytorch: 1.3.0, 1.2.0, 1.1.0 
 
@@ -121,9 +121,9 @@ CONTAINER           CPU %               MEM USAGE / LIMIT
 
 **mlc-start container_name** to explicitly start a container
 
-mlc-stop will power up the container. mlc-start is a way to start the container to run installed background process like an installed web server on the container without the need to open an interactive shell to it. 
+mlc-start is a way to start the container to run installed background processes, like an installed web server, on the container without the need to open an interactive shell to it. 
 
-For opening a shell to the container just use 'mlc-open', which will automatically also start the container if necessary.
+For opening a shell to the container just use 'mlc-open', which will automatically start the container if the container is not already running.
 
 
 ### Stop machine learning containers
