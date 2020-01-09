@@ -1,7 +1,33 @@
 #!/bin/bash
 
+FILTER=label=aime.mlc=$USER
+
+ARGS=()
+
+for i in "$@"
+do
+case $i in
+    -a|--all)
+	FILTER=label=aime.mlc    
+	;;
+    -h|--help)
+    echo -e "List available ml-containers"
+    echo -e "\nUsage: mlc-list [-a|--all]\n"
+    exit -1
+    ;;
+    -*)
+    echo "Unknown option: $i"
+    exit -1
+    ;;
+    *)
+    ARGS+=($i)
+    ;;
+esac
+done
+
+
 echo -e "\nAvailable ml-containers are:\n"
 
-OUTPUT=$(docker container ls -a --filter=label=aime.mlc --format "table [{{.Names}}]\t{{.Label \"aime.mlc.FRAMEWORK\"}}\t{{.Status}}")
+OUTPUT=$(docker container ls -a --filter=$FILTER --format "table [{{.Names}}]\t{{.Label \"aime.mlc.FRAMEWORK\"}}\t{{.Status}}")
 echo "${OUTPUT/\[NAMES\]  /CONTAINER}"-
 echo -e ""
