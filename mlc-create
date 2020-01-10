@@ -134,7 +134,7 @@ function print_help {
 }
 
 
-read_repo ml_images.repo
+read_repo $(dirname $0)/ml_images.repo
 
 if [[ $CONTAINER_NAME == "" || $FRAMEWORK_NAME == "" ]]
 then
