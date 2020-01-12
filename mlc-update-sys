@@ -1,6 +1,5 @@
 #!/bin/bash
 
-BRANCH=stable-cuda
 CONFIRMED=false
 
 ARGS=()
@@ -42,6 +41,7 @@ fi
 {
   echo -e "\nUpdating ML container system ... \n"
   cd $MLC_PATH
+  BRANCH=$(basename $(git symbolic-ref HEAD))
   sudo git pull origin $BRANCH
   exit
 } 
