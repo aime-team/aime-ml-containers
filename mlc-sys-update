@@ -24,21 +24,25 @@ done
 
 MLC_PATH=$(dirname $0)
 
-
-echo -e "This will update the ML container system to the latest version."
-echo -e ""
-
-read -p "Update ML container system? (Y/N) " -n 1 -r
-echo 
-if [[ $REPLY =~ ^[Yy]$ ]]
+if [[ $CONFIRMED == false ]]
 then
-  {
-    echo -e ""    
-    cd $MLC_PATH
-    sudo git pull origin $BRANCH
-    exit
-  } 
-else
-  exit 0
+  echo -e "This will update the ML container system to the latest version."
+  echo -e ""
+
+  read -p "Update ML container system? (Y/N) " -n 1 -r
+  echo 
+  if [[ $REPLY =~ ^[Yy]$ ]]
+  then
+    CONFIRMED=true
+  else
+    exit 0
+  fi
 fi
+
+{
+  echo -e "\nUpdating ML container system ... \n"
+  cd $MLC_PATH
+  sudo git pull origin $BRANCH
+  exit
+} 
 
