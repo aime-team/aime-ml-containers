@@ -1,0 +1,44 @@
+#!/bin/bash
+
+BRANCH=stable-cuda
+CONFIRMED=false
+
+ARGS=()
+
+for i in "$@"
+do
+case $i in
+    -Y|--yes)
+    CONFIRMED=true
+    ;;
+    -*)
+    echo "Unknown option: $i"
+    exit -1
+    ;;
+    *)
+    ARGS+=($i)
+          # unknown option
+    ;;
+esac
+done
+
+MLC_PATH=$(dirname $0)
+
+
+echo -e "This will update the ML container system to the latest version."
+echo -e ""
+
+read -p "Update ML container system? (Y/N) " -n 1 -r
+echo 
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+  {
+    echo -e ""    
+    cd $MLC_PATH
+    sudo git pull origin $BRANCH
+    exit
+  } 
+else
+  exit 0
+fi
+
