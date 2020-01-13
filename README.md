@@ -148,6 +148,15 @@ Warning: the container will be unrecoverable deleted only data stored in the /wo
 mlc-remove my-container
 ```
 
+### Update ML Containers
+
+**mlc-update-sys** to update the container managment system to latest version.
+
+The container system and container repo will be updated to latest version. Run this command to check if new framework versions are available. On most systems privileged access (sudo password) is required to do so.
+
+```
+mlc-update-sys
+```
 
 ## Installation
 

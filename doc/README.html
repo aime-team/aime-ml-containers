@@ -99,6 +99,11 @@ CONTAINER           CPU %               MEM USAGE / LIMIT
 <p>Warning: the container will be unrecoverable deleted only data stored in the /workspace directory will be kept. Only use to clean up containers which are not needed anymore. </p>
 <pre><code>mlc-remove my-container
 </code></pre>
+<h3 id="update-ml-containers">Update ML Containers</h3>
+<p><strong>mlc-update-sys</strong> to update the container managment system to latest version.</p>
+<p>The container system and container repo will be updated to latest version. Run this command to check if new framework versions are available. On most systems privileged access (sudo password) is required to do so.</p>
+<pre><code>mlc-update-sys
+</code></pre>
 <h2 id="installation">Installation</h2>
 <p>AIME machines come pre installed with AIME machine learning container management system for more information see: https://www.aime.info</p>
 
