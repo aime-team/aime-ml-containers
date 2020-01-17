@@ -128,7 +128,7 @@ For opening a shell to the container just use 'mlc-open', which will automatical
 
 ### Stop machine learning containers
 
-**ml-stop container_name [-Y]** to explicitly stop a container. 
+**mlc-stop container_name [-Y]** to explicitly stop a container. 
 
 mlc-stop on a container is comparable to a shutdown of a computer, all activate processes and open shells to the container will be terminated.
 
