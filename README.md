@@ -79,7 +79,7 @@ Multiple instances of a container can be opened with mlc-open. Each instance run
 To exit an opened shell to the container type 'exit' on the command line. The last exited shell will automatically stop the container.
 
 
-### List avilable machine learning containers
+### List available machine learning containers
 
 **mlc-list** will list all available containers for the current user
 
@@ -142,7 +142,7 @@ mlc-stop my-container -Y
 
 **mlc-remove container_name** to remove the container.
 
-Warning: the container will be unrecoverable deleted only data stored in the /workspace directory will be kept. Only use to clean up containers which are not needed anymore. 
+Warning: the container will be unrecoverable deleted only data stored in the /workspace directory will be kept. Only use to clean up containers which are not needed any more. 
 
 ```
 mlc-remove my-container
