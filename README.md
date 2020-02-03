@@ -160,6 +160,6 @@ mlc-update-sys
 
 ## Installation
 
-AIME machines come pre installed with AIME machine learning container management system for more information see: https://www.aime.info
+AIME machines come pre installed with AIME machine learning container management system for more information see: https://www.aime.info/blog/deep-learning-framework-container-management/
 
 
