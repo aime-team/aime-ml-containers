@@ -30,7 +30,7 @@ then
   echo -e ""
 
   OUTPUT=$(git remote update)
-  UPDATE_LOG=$(git log HEAD..origin/master --pretty=format:" - %s")
+  UPDATE_LOG=$(git log HEAD..origin/$BRANCH --pretty=format:" - %s")
   if [[ $UPDATE_LOG == "" ]]
   then
     echo -e "ML container system is up to date.\n"
