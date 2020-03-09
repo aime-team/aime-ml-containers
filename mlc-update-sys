@@ -22,11 +22,22 @@ esac
 done
 
 MLC_PATH=$(dirname $0)
+BRANCH=$(basename $(git symbolic-ref HEAD))
 
 if [[ $CONFIRMED == false ]]
 then
   echo -e "This will update the ML container system to the latest version."
   echo -e ""
+
+  OUTPUT=$(git remote update)
+  UPDATE_LOG=$(git log HEAD..origin/master --pretty=format:" - %s")
+  if [[ $UPDATE_LOG == "" ]]
+  then
+    echo -e "ML container system is up to date.\n"
+    exit -1
+  fi
+
+  echo -e "Update(s) availabe.\n\nChange Log:\n$UPDATE_LOG\n"
 
   read -p "Update ML container system? (Y/N) " -n 1 -r
   echo 
@@ -41,7 +52,6 @@ fi
 {
   echo -e "\nUpdating ML container system ... \n"
   cd $MLC_PATH
-  BRANCH=$(basename $(git symbolic-ref HEAD))
   sudo git pull origin $BRANCH
   exit
 } 
