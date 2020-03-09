@@ -2,7 +2,7 @@
 
 AIME machine learning container management system. 
 
-Easily install, run and manage docker containers for the most common deep learning frameworks. 
+Easily install, run and manage Docker containers for the most common deep learning frameworks. 
 
 ## Features
 
@@ -34,7 +34,7 @@ Tensorflow: 2.1.0, 2.0.0, 1.15.0, 1.15, 1.14.0, 1.13.2
 
 Mxnet: 1.5.0, 1.4.1, 1.3.1
 
-Pytorch: 1.3.0, 1.2.0, 1.1.0 
+Pytorch: 1.4.0, 1.3.0, 1.2.0, 1.1.0 
 
 Example to create a container with the name 'my-container' as Tensorflow 1.15.0 with mounted user home directory as workspace use:
 
@@ -79,7 +79,7 @@ Multiple instances of a container can be opened with mlc-open. Each instance run
 To exit an opened shell to the container type 'exit' on the command line. The last exited shell will automatically stop the container.
 
 
-### List avilable machine learning containers
+### List available machine learning containers
 
 **mlc-list** will list all available containers for the current user
 
@@ -128,7 +128,7 @@ For opening a shell to the container just use 'mlc-open', which will automatical
 
 ### Stop machine learning containers
 
-**ml-stop container_name [-Y]** to explicitly stop a container. 
+**mlc-stop container_name [-Y]** to explicitly stop a container. 
 
 mlc-stop on a container is comparable to a shutdown of a computer, all activate processes and open shells to the container will be terminated.
 
@@ -142,7 +142,7 @@ mlc-stop my-container -Y
 
 **mlc-remove container_name** to remove the container.
 
-Warning: the container will be unrecoverable deleted only data stored in the /workspace directory will be kept. Only use to clean up containers which are not needed anymore. 
+Warning: the container will be unrecoverable deleted only data stored in the /workspace directory will be kept. Only use to clean up containers which are not needed any more. 
 
 ```
 mlc-remove my-container
@@ -160,6 +160,6 @@ mlc-update-sys
 
 ## Installation
 
-AIME machines come pre installed with AIME machine learning container management system for more information see: https://www.aime.info
+AIME machines come pre installed with AIME machine learning container management system for more information see: https://www.aime.info/blog/deep-learning-framework-container-management/
 
 
