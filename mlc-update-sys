@@ -22,6 +22,8 @@ esac
 done
 
 MLC_PATH=$(dirname $0)
+cd $MLC_PATH
+
 BRANCH=$(basename $(git symbolic-ref HEAD))
 
 if [[ $CONFIRMED == false ]]
@@ -51,7 +53,6 @@ fi
 
 {
   echo -e "\nUpdating ML container system ... \n"
-  cd $MLC_PATH
   sudo git pull origin $BRANCH
   exit
 } 
