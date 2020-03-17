@@ -24,6 +24,18 @@ done
 MLC_PATH=$(dirname $0)
 cd $MLC_PATH
 
+if [ ! -d "$MLC_PATH/.git" ]
+then
+  echo "Failed: ML container system not installed as updatable git repo"
+  exit -1
+fi
+
+SUDO="sudo"
+if [ -w "$MLC_PATH/.git" ] 
+then
+  SUDO=""
+fi
+
 BRANCH=$(basename $(git symbolic-ref HEAD))
 
 if [[ $CONFIRMED == false ]]
@@ -31,8 +43,20 @@ then
   echo -e "This will update the ML container system to the latest version."
   echo -e ""
 
-  OUTPUT=$(git remote update)
-  UPDATE_LOG=$(git log HEAD..origin/$BRANCH --pretty=format:" - %s")
+  if [[ ! $SUDO == "" ]]
+  then
+    read -p "Check for available updates? (Y/N) " -n 1 -r
+    echo 
+    if [[ $REPLY =~ ^[Yy]$ ]]
+    then
+      echo ""
+    else
+      exit 0
+    fi
+  fi
+
+  OUTPUT=$($SUDO git remote update)
+  UPDATE_LOG=$($SUDO git log HEAD..origin/$BRANCH --pretty=format:" - %s")
   if [[ $UPDATE_LOG == "" ]]
   then
     echo -e "ML container system is up to date.\n"
@@ -53,7 +77,7 @@ fi
 
 {
   echo -e "\nUpdating ML container system ... \n"
-  sudo git pull origin $BRANCH
-  exit
+  $SUDO git pull origin $BRANCH
+  exit 1
 } 
 
