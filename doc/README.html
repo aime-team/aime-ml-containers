@@ -7,8 +7,8 @@
       <body>
         <div id='content'>
     <h1 id="aime-ml-containers">AIME ML Containers</h1>
-<p>AIME machine learning container management system. </p>
-<p>Easily install, run and manage Docker containers for the most common deep learning frameworks. </p>
+<p>AIME machine learning container management system.</p>
+<p>Easily install, run and manage Docker containers for the most common deep learning frameworks.</p>
 <h2 id="features">Features</h2>
 <ul>
 <li>Setup and run a specific version of Tensorflow, Pytorch or Mxnet with one simple command</li>
@@ -17,7 +17,7 @@
 <li>Clear separation of user code and framework installation, test your code with a different framework version in minutes</li>
 <li>multi session: open and run many shell session on a single container simultaneously</li>
 <li>multi user: separate container space for each user</li>
-<li>multi GPU: allocate GPUs per user, container or session </li>
+<li>multi GPU: allocate GPUs per user, container or session</li>
 <li>Runs with the same performance as a bare metal installation</li>
 <li>Repository of all major deep learning framework versions as containers</li>
 </ul>
@@ -28,14 +28,14 @@
 <p>Available Frameworks:</p>
 <p>Tensorflow, Mxnet, Pytorch</p>
 <p>Available Versions:</p>
-<p>Tensorflow: 2.2.0, 2.1.0, 2.0.0, 1.15.0, 1.15, 1.14.0, 1.13.2</p>
+<p>Tensorflow: 2.3.0, 2.2.0, 2.1.0, 2.0.0, 1.15.0, 1.15, 1.14.0, 1.13.2</p>
 <p>Mxnet: 1.6.0, 1.5.0, 1.4.1, 1.3.1</p>
-<p>Pytorch: 1.5.0, 1.4.0, 1.3.0, 1.2.0, 1.1.0 </p>
+<p>Pytorch: 1.6.0, 1.5.1, 1.5.0, 1.4.0, 1.3.0, 1.2.0, 1.1.0</p>
 <p>Example to create a container with the name 'my-container' as Tensorflow 1.15.0 with mounted user home directory as workspace use:</p>
 <pre><code>&gt; mlc-create my-container Tensorflow 1.15.0 -w=/home/admin
 </code></pre>
 <h3 id="open-a-machine-learning-container">Open a machine learning container</h3>
-<p><strong>mlc-open container_name</strong> </p>
+<p><strong>mlc-open container_name</strong></p>
 <p>To open the created machine learning container "my-container"</p>
 <pre><code>&gt; mlc-open my-container
 </code></pre>
@@ -86,17 +86,17 @@ CONTAINER           CPU %               MEM USAGE / LIMIT
 </code></pre>
 <h3 id="start-machine-learning-containers">Start machine learning containers</h3>
 <p><strong>mlc-start container_name</strong> to explicitly start a container</p>
-<p>mlc-start is a way to start the container to run installed background processes, like an installed web server, on the container without the need to open an interactive shell to it. </p>
+<p>mlc-start is a way to start the container to run installed background processes, like an installed web server, on the container without the need to open an interactive shell to it.</p>
 <p>For opening a shell to the container just use 'mlc-open', which will automatically start the container if the container is not already running.</p>
 <h3 id="stop-machine-learning-containers">Stop machine learning containers</h3>
-<p><strong>mlc-stop container_name [-Y]</strong> to explicitly stop a container. </p>
+<p><strong>mlc-stop container_name [-Y]</strong> to explicitly stop a container.</p>
 <p>mlc-stop on a container is comparable to a shutdown of a computer, all activate processes and open shells to the container will be terminated.</p>
 <p>To force a stop on a container use:</p>
 <pre><code>mlc-stop my-container -Y
 </code></pre>
 <h3 id="removedelete-a-machine-learning-container">Remove/Delete a machine learning container</h3>
 <p><strong>mlc-remove container_name</strong> to remove the container.</p>
-<p>Warning: the container will be unrecoverable deleted only data stored in the /workspace directory will be kept. Only use to clean up containers which are not needed any more. </p>
+<p>Warning: the container will be unrecoverable deleted only data stored in the /workspace directory will be kept. Only use to clean up containers which are not needed any more.</p>
 <pre><code>mlc-remove my-container
 </code></pre>
 <h3 id="update-ml-containers">Update ML Containers</h3>
