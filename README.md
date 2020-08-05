@@ -1,8 +1,8 @@
 # AIME ML Containers
 
-AIME machine learning container management system. 
+AIME machine learning container management system.
 
-Easily install, run and manage Docker containers for the most common deep learning frameworks. 
+Easily install, run and manage Docker containers for the most common deep learning frameworks.
 
 ## Features
 
@@ -12,7 +12,7 @@ Easily install, run and manage Docker containers for the most common deep learni
 * Clear separation of user code and framework installation, test your code with a different framework version in minutes
 * multi session: open and run many shell session on a single container simultaneously
 * multi user: separate container space for each user
-* multi GPU: allocate GPUs per user, container or session 
+* multi GPU: allocate GPUs per user, container or session
 * Runs with the same performance as a bare metal installation
 * Repository of all major deep learning framework versions as containers
 
@@ -30,11 +30,11 @@ Tensorflow, Mxnet, Pytorch
 
 Available Versions:
 
-Tensorflow: 2.2.0, 2.1.0, 2.0.0, 1.15.0, 1.15, 1.14.0, 1.13.2
+Tensorflow: 2.3.0, 2.2.0, 2.1.0, 2.0.0, 1.15.0, 1.15, 1.14.0, 1.13.2
 
 Mxnet: 1.6.0, 1.5.0, 1.4.1, 1.3.1
 
-Pytorch: 1.5.0, 1.4.0, 1.3.0, 1.2.0, 1.1.0 
+Pytorch: 1.5.0, 1.4.0, 1.3.0, 1.2.0, 1.1.0
 
 Example to create a container with the name 'my-container' as Tensorflow 1.15.0 with mounted user home directory as workspace use:
 
@@ -45,7 +45,7 @@ Example to create a container with the name 'my-container' as Tensorflow 1.15.0 
 
 ### Open a machine learning container
 
-**mlc-open container_name** 
+**mlc-open container_name**
 
 To open the created machine learning container "my-container"
 
@@ -121,14 +121,14 @@ CONTAINER           CPU %               MEM USAGE / LIMIT
 
 **mlc-start container_name** to explicitly start a container
 
-mlc-start is a way to start the container to run installed background processes, like an installed web server, on the container without the need to open an interactive shell to it. 
+mlc-start is a way to start the container to run installed background processes, like an installed web server, on the container without the need to open an interactive shell to it.
 
 For opening a shell to the container just use 'mlc-open', which will automatically start the container if the container is not already running.
 
 
 ### Stop machine learning containers
 
-**mlc-stop container_name [-Y]** to explicitly stop a container. 
+**mlc-stop container_name [-Y]** to explicitly stop a container.
 
 mlc-stop on a container is comparable to a shutdown of a computer, all activate processes and open shells to the container will be terminated.
 
@@ -142,7 +142,7 @@ mlc-stop my-container -Y
 
 **mlc-remove container_name** to remove the container.
 
-Warning: the container will be unrecoverable deleted only data stored in the /workspace directory will be kept. Only use to clean up containers which are not needed any more. 
+Warning: the container will be unrecoverable deleted only data stored in the /workspace directory will be kept. Only use to clean up containers which are not needed any more.
 
 ```
 mlc-remove my-container
@@ -161,5 +161,3 @@ mlc-update-sys
 ## Installation
 
 AIME machines come pre installed with AIME machine learning container management system for more information see: https://www.aime.info/blog/deep-learning-framework-container-management/
-
-
