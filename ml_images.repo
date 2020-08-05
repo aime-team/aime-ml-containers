@@ -6,6 +6,7 @@ Tensorflow, 1.15.0, CUDA, aimehub/tensorflow-1.15.0-cuda
 Tensorflow, 1.14.0, CUDA, aimehub/tensorflow-1.14.0-cuda
 Tensorflow, 1.14.0_nvidia, CUDA, aimehub/tensorflow-1.14.0_nvidia-cuda 
 Tensorflow, 1.13.2, CUDA, aimehub/tensorflow-1.13.2-cuda
+Pytorch, 1.5.1, CUDA, aimehub/pytorch-1.5.1-cuda
 Pytorch, 1.5.0, CUDA, aimehub/pytorch-1.5.0-cuda
 Pytorch, 1.4.0, CUDA, aimehub/pytorch-1.4.0-cuda
 Pytorch, 1.3.0, CUDA, aimehub/pytorch-1.3-cuda
