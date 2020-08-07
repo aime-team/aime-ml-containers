@@ -20,7 +20,7 @@ Easily install, run and manage Docker containers for the most common deep learni
 
 ### Create a machine learning container
 
-**mlc-create container_name framework version [-w=workspace]**
+**mlc-create container_name framework version [-w=workspace\_dir] [-d=data\_dir]**
 
 Create a new machine learning container
 

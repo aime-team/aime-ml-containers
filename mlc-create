@@ -4,6 +4,7 @@ INTERACTIVE=false
 GPUS="all"
 SUPPORTED_ARCH="CUDA"
 WORKSPACE_MOUNT=$HOME/workspace
+DATA_MOUNT=
 
 ARGS=()
 
@@ -18,7 +19,10 @@ case $i in
     ;;
     -w=*|--workspace=*)
     WORKSPACE_MOUNT="${i#*=}"
-    ;;    
+    ;;
+    -d=*|--data=*)
+    DATA_MOUNT="${i#*=}"
+    ;;
     -*)
     echo "Unknown option: $i"
     exit -1
@@ -49,23 +53,23 @@ function check_container_exists {
 
 function read_repo {
   REPO_FILE=$1
-  while IFS=',' read framework ver arch repo reserverd 
+  while IFS=',' read framework ver arch repo reserverd
    do
-     framework=$(echo $framework | xargs) 
-     ver=$(echo $ver | xargs) 
+     framework=$(echo $framework | xargs)
+     ver=$(echo $ver | xargs)
      arch=$(echo $arch | xargs)
      image=$(echo $image | xargs)
 #     echo "'$framework' '$ver' $arch $repo"
      if [[ $arch == $SUPPORTED_ARCH ]]
      then
        entry=0
-       if [[ -v "FRAMEWORK_ENTRIES[$framework]" ]] 
+       if [[ -v "FRAMEWORK_ENTRIES[$framework]" ]]
        then
-         entry=$((${FRAMEWORK_ENTRIES[$framework]} + 1))  
+         entry=$((${FRAMEWORK_ENTRIES[$framework]} + 1))
        fi
        FRAMEWORK_ENTRIES[$framework]=$entry
        IMAGES[$framework,$entry,version]=$ver
-       IMAGES[$framework,$entry,repo]=$repo 
+       IMAGES[$framework,$entry,repo]=$repo
      fi
    done < $REPO_FILE
 }
@@ -77,12 +81,12 @@ function get_frameworks {
 function get_framework_versions {
   SEARCH_FRAMEWORK=$1
 
-  for K in "${!FRAMEWORK_ENTRIES[@]}" 
+  for K in "${!FRAMEWORK_ENTRIES[@]}"
   do
     if [[ $K == $SEARCH_FRAMEWORK ]]
     then
       entries=${FRAMEWORK_ENTRIES[$K]}
-      versions=() 
+      versions=()
       for i in $(seq 0 $entries);
       do
         versions+=( ${IMAGES[$K,$i,version]})
@@ -97,12 +101,12 @@ function find_image {
   SEARCH_FRAMEWORK=$1
   SEARCH_VERSION=$2
 
-  for K in "${!FRAMEWORK_ENTRIES[@]}" 
+  for K in "${!FRAMEWORK_ENTRIES[@]}"
   do
     if [[ $K == $SEARCH_FRAMEWORK ]]
     then
       entries=${FRAMEWORK_ENTRIES[$K]}
-      versions=() 
+      versions=()
       for i in $(seq 0 $entries);
       do
         version=( ${IMAGES[$K,$i,version]})
@@ -119,14 +123,14 @@ function find_image {
 
 
 function print_help {
-  echo -e "\nCreate a new machine learning container" 
-  echo -e "\nUsage: mlc-create container_name framework version [-w=workspace]"
+  echo -e "\nCreate a new machine learning container"
+  echo -e "\nUsage: mlc-create container_name framework version [-w=workspace_dir] [-d=data_dir]"
 
   echo -e "\nAvailable Frameworks:\n\n$(get_frameworks)"
 
   echo -e "\nAvailable Versions:\n"
-  for K in "${!FRAMEWORK_ENTRIES[@]}" 
-  do 
+  for K in "${!FRAMEWORK_ENTRIES[@]}"
+  do
     echo "$K: $(get_framework_versions $K)"
   done
 
@@ -166,7 +170,7 @@ then
   then
     echo -e "\nError: framework versions not specified"
   else
-    echo -e "\nError: unavailable framework version '$FRAMEWORK_VERSION'"    
+    echo -e "\nError: unavailable framework version '$FRAMEWORK_VERSION'"
   fi
   echo -e "\nAvailable '$FRAMEWORK_NAME' versions are: $available_versions"
   exit -3
@@ -185,6 +189,18 @@ else
   exit -4
 fi
 
+if [[ $DATA_MOUNT != "" ]]
+then
+  DATA_MOUNT=$(realpath $DATA_MOUNT)
+  if [ -d "$DATA_MOUNT" ]; then
+    echo -e "/data will mount on '$DATA_MOUNT' - OK"
+  else
+    echo -e "\nAborted.\n\nData directory not existing: $DATA_MOUNT"
+    echo -e "\nThe data directory will be mounted as /data in the container."
+    echo -e "It is the directory where data sets for example mounted from\nnetwork volumes can be accessed inside the container."
+    exit -4
+  fi
+fi
 
 echo -e "\nAcquiring container image ... \n"
 
@@ -194,6 +210,7 @@ echo -e "\nSetting up container ... \n"
 
 CONTAINER_LABEL="aime.mlc"
 WORKSPACE=/workspace
+DATA=/data
 USER_ID=$(id -u)
 GROUP_ID=$(id -g)
 
@@ -201,6 +218,11 @@ docker run -v $WORKSPACE_MOUNT:$WORKSPACE -w $WORKSPACE --name=$CONTAINER_NAME -
 OUT=$(docker commit $CONTAINER_NAME $IMAGE:$CONTAINER_NAME)
 OUT=$(docker rm $CONTAINER_NAME)
 
-OUT=$(docker create -it -v $HOME/workspace:$WORKSPACE -w $WORKSPACE --name=$CONTAINER_NAME --label=$CONTAINER_LABEL=$USER --label=$CONTAINER_LABEL.USER=$USER --label=$CONTAINER_LABEL.FRAMEWORK=$FRAMEWORK_NAME-$FRAMEWORK_VERSION --user $USER_ID:$GROUP_ID --tty --privileged --interactive --gpus=all --network=host --device /dev/video0 --device /dev/snd -e DISPLAY=unix$DISPLAY --shm-size=1g --ulimit memlock=-1 --ulimit stack=67108864 --volume $XAUTH:/root/.Xauthority -v /tmp/.X11-unix:/tmp/.X11-unix --group-add video --group-add sudo $IMAGE:$CONTAINER_NAME bash -c "echo \"export PS1='[$CONTAINER_NAME] \\\`whoami\\\`@\\\`hostname\\\`:\\\${PWD#*}$ '\" >> ~/.bashrc; bash")
+VOLUMES="-v $WORKSPACE_MOUNT:$WORKSPACE"
+if [[ $DATA_MOUNT != "" ]]
+then
+  VOLUMES="$VOLUMES -v $DATA_MOUNT:$DATA"
+fi
+OUT=$(docker create -it $VOLUMES -w $WORKSPACE --name=$CONTAINER_NAME --label=$CONTAINER_LABEL=$USER --label=$CONTAINER_LABEL.USER=$USER --label=$CONTAINER_LABEL.FRAMEWORK=$FRAMEWORK_NAME-$FRAMEWORK_VERSION --user $USER_ID:$GROUP_ID --tty --privileged --interactive --gpus=all --network=host --device /dev/video0 --device /dev/snd -e DISPLAY=unix$DISPLAY --shm-size=1g --ulimit memlock=-1 --ulimit stack=67108864 --volume $XAUTH:/root/.Xauthority -v /tmp/.X11-unix:/tmp/.X11-unix --group-add video --group-add sudo $IMAGE:$CONTAINER_NAME bash -c "echo \"export PS1='[$CONTAINER_NAME] \\\`whoami\\\`@\\\`hostname\\\`:\\\${PWD#*}$ '\" >> ~/.bashrc; bash")
 
 echo -e "\n[$CONTAINER_NAME] ready. Open the container with: mlc-open $CONTAINER_NAME\n"
