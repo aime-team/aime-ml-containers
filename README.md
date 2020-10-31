@@ -30,7 +30,7 @@ Tensorflow, Mxnet, Pytorch
 
 Available Versions:
 
-Tensorflow: 2.3.0, 2.2.0, 2.1.0, 2.0.0, 1.15.0, 1.15, 1.14.0, 1.13.2
+Tensorflow: 2.3.1-nvidia, 2.3.0, 2.2.0, 2.1.0, 2.0.0, 1.15.4-nvidia, 1.15.0, 1.15, 1.14.0, 1.13.2
 
 Mxnet: 1.6.0, 1.5.0, 1.4.1, 1.3.1
 
