@@ -50,7 +50,12 @@ echo "["$CONTAINER_NAME"] opening shell to container"
 #docker container attach $CONTAINER_NAME
 USER_ID=$(id -u)
 GROUP_ID=$(id -g)
-docker exec -it --user $USER_ID:$GROUP_ID $CONTAINER_NAME bash
+SET_ENV=""
+if [[ -v NCCL_P2P_LEVEL ]]; then
+  SET_ENV="-e NCCL_P2P_LEVEL=$NCCL_P2P_LEVEL"
+fi
+
+docker exec -it $SET_ENV --user $USER_ID:$GROUP_ID $CONTAINER_NAME bash
 EXIT_CODE=$?
 
 if [[ $EXIT_CODE == 1 ]]
