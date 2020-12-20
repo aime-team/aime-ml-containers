@@ -28,27 +28,17 @@ Available frameworks:
 
 Tensorflow, Mxnet, Pytorch
 
-
-Available versions:
-
-*  Tensorflow: 2.4.0, 2.3.1-nvidia, 2.3.0, 2.2.0, 2.1.0, 2.0.0, 1.15.4-nvidia, 1.15.0, 1.15, 1.14.0, 1.13.2
-
-*  Pytorch: 1.7.0, 1.6.0, 1.5.1, 1.5.0, 1.4.0, 1.3.0, 1.2.0, 1.1.0
-
-*  Mxnet: 1.6.0, 1.5.0, 1.4.1, 1.3.1
-
-
 Available versions for Nvidia Ampere based GPUs (RTX 30x0, A100):
 
 *  Tensorflow: 2.4.0, 2.3.1-nvidia, 1.15.4-nvidia
 
-*  Pytorch: 1.7.0
+*  Pytorch: 1.7.1, 1.7.0, 1.7.0-nvidia
 
 
 Example to create a container with the name 'my-container' as Tensorflow 1.15.0 with mounted user home directory as workspace use:
 
 ```
-> mlc-create my-container Tensorflow 1.15.0 -w=/home/admin
+> mlc-create my-container Tensorflow 2.4.0 -w=/home/admin
 ```
 
 
