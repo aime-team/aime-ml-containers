@@ -214,7 +214,7 @@ DATA=/data
 USER_ID=$(id -u)
 GROUP_ID=$(id -g)
 
-docker run -v $WORKSPACE_MOUNT:$WORKSPACE -w $WORKSPACE --name=$CONTAINER_NAME --label=$CONTAINER_LABEL=$USER --tty --privileged  --gpus=all --network=host --device /dev/video0 --device /dev/snd -e DISPLAY=unix$DISPLAY --shm-size=1g --ulimit memlock=-1 --ulimit stack=67108864 --volume $XAUTH:/root/.Xauthority -v /tmp/.X11-unix:/tmp/.X11-unix $IMAGE bash -c "echo \"export PS1='[$CONTAINER_NAME] \\\`whoami\\\`@\\\`hostname\\\`:\\\${PWD#*}$ '\" >> ~/.bashrc; apt-get update -y > /dev/null; apt-get install sudo git -q -y > /dev/null; addgroup --gid $GROUP_ID $USER > /dev/null; adduser --uid $USER_ID --gid $GROUP_ID $USER --disabled-password --gecos aime > /dev/null; passwd -d $USER; echo \"$USER ALL=(ALL) NOPASSWD: ALL\" > /etc/sudoers.d/${USER}_no_password; chmod 440 /etc/sudoers.d/${USER}_no_password; exit"
+docker run -v $WORKSPACE_MOUNT:$WORKSPACE -w $WORKSPACE --name=$CONTAINER_NAME --label=$CONTAINER_LABEL=$USER --tty --privileged  --gpus=all --network=host --device /dev/video0 --device /dev/snd -e DISPLAY=unix$DISPLAY --shm-size=4g --ulimit memlock=-1 --ulimit stack=67108864 --volume $XAUTH:/root/.Xauthority -v /tmp/.X11-unix:/tmp/.X11-unix $IMAGE bash -c "echo \"export PS1='[$CONTAINER_NAME] \\\`whoami\\\`@\\\`hostname\\\`:\\\${PWD#*}$ '\" >> ~/.bashrc; apt-get update -y > /dev/null; apt-get install sudo git -q -y > /dev/null; addgroup --gid $GROUP_ID $USER > /dev/null; adduser --uid $USER_ID --gid $GROUP_ID $USER --disabled-password --gecos aime > /dev/null; passwd -d $USER; echo \"$USER ALL=(ALL) NOPASSWD: ALL\" > /etc/sudoers.d/${USER}_no_password; chmod 440 /etc/sudoers.d/${USER}_no_password; exit"
 OUT=$(docker commit $CONTAINER_NAME $IMAGE:$CONTAINER_NAME)
 OUT=$(docker rm $CONTAINER_NAME)
 
@@ -223,6 +223,6 @@ if [[ $DATA_MOUNT != "" ]]
 then
   VOLUMES="$VOLUMES -v $DATA_MOUNT:$DATA"
 fi
-OUT=$(docker create -it $VOLUMES -w $WORKSPACE --name=$CONTAINER_NAME --label=$CONTAINER_LABEL=$USER --label=$CONTAINER_LABEL.USER=$USER --label=$CONTAINER_LABEL.FRAMEWORK=$FRAMEWORK_NAME-$FRAMEWORK_VERSION --user $USER_ID:$GROUP_ID --tty --privileged --interactive --gpus=all --network=host --device /dev/video0 --device /dev/snd -e DISPLAY=unix$DISPLAY --shm-size=1g --ulimit memlock=-1 --ulimit stack=67108864 --volume $XAUTH:/root/.Xauthority -v /tmp/.X11-unix:/tmp/.X11-unix --group-add video --group-add sudo $IMAGE:$CONTAINER_NAME bash -c "echo \"export PS1='[$CONTAINER_NAME] \\\`whoami\\\`@\\\`hostname\\\`:\\\${PWD#*}$ '\" >> ~/.bashrc; bash")
+OUT=$(docker create -it $VOLUMES -w $WORKSPACE --name=$CONTAINER_NAME --label=$CONTAINER_LABEL=$USER --label=$CONTAINER_LABEL.USER=$USER --label=$CONTAINER_LABEL.FRAMEWORK=$FRAMEWORK_NAME-$FRAMEWORK_VERSION --user $USER_ID:$GROUP_ID --tty --privileged --interactive --gpus=all --network=host --device /dev/video0 --device /dev/snd -e DISPLAY=unix$DISPLAY --shm-size=4g --ulimit memlock=-1 --ulimit stack=67108864 --volume $XAUTH:/root/.Xauthority -v /tmp/.X11-unix:/tmp/.X11-unix --group-add video --group-add sudo $IMAGE:$CONTAINER_NAME bash -c "echo \"export PS1='[$CONTAINER_NAME] \\\`whoami\\\`@\\\`hostname\\\`:\\\${PWD#*}$ '\" >> ~/.bashrc; bash")
 
 echo -e "\n[$CONTAINER_NAME] ready. Open the container with: mlc-open $CONTAINER_NAME\n"
