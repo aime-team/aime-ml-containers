@@ -24,6 +24,7 @@ Pytorch, 1.4.0, CUDA, aimehub/pytorch-1.4.0-cuda
 Pytorch, 1.3.0, CUDA, aimehub/pytorch-1.3-cuda
 Pytorch, 1.2.0, CUDA, aimehub/pytorch-1.2-cuda
 Pytorch, 1.1.0, CUDA, aimehub/pytorch-1.1.0-cuda
+Mxnet, 1.8.0-nvidia, CUDA_AMPERE, aimehub/mxnet-1.8.0-nvidia-20.12
 Mxnet, 1.6.0, CUDA, aimehub/mxnet-1.6.0-cuda
 Mxnet, 1.5.0, CUDA, aimehub/mxnet-1.5.0-cuda
 Mxnet, 1.4.1, CUDA, aimehub/mxnet-1.4.1-cuda
