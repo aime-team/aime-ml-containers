@@ -30,7 +30,7 @@ Tensorflow, MXNet, Pytorch
 
 Available versions for NVIDIA Ampere based GPUs (RTX 30x0, RTX A6000, A100):
 
-*  Tensorflow: 2.4.1, 2.4.0, 2.3.1-nvidia, 1.15.4-nvidia
+*  Tensorflow: 2.5.0, 2.4.1, 2.4.0, 2.3.1-nvidia, 1.15.4-nvidia
 
 *  MXNet: 1.8.0-nvidia
 

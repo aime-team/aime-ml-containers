@@ -1,3 +1,4 @@
+Tensorflow, 2.5.0, CUDA_AMPERE, aimehub/tensorflow-2.5.0-cuda11.2
 Tensorflow, 2.4.1, CUDA_AMPERE, aimehub/tensorflow-2.4.1-cuda
 Tensorflow, 2.4.1-aime, CUDA_AMPERE, aimehub/tensorflow-2.4.1-cuda110-aime
 Tensorflow, 2.4.0, CUDA_AMPERE, aimehub/tensorflow-2.4.0-cuda
