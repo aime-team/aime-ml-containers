@@ -1,5 +1,6 @@
 #!/bin/bash
 
+MLC_VERSION=2
 INTERACTIVE=false
 GPUS="all"
 SUPPORTED_ARCH="CUDA_AMPERE"
@@ -223,6 +224,6 @@ if [[ $DATA_MOUNT != "" ]]
 then
   VOLUMES="$VOLUMES -v $DATA_MOUNT:$DATA"
 fi
-OUT=$(docker create -it $VOLUMES -w $WORKSPACE --name=$CONTAINER_NAME --label=$CONTAINER_LABEL=$USER --label=$CONTAINER_LABEL.USER=$USER --label=$CONTAINER_LABEL.FRAMEWORK=$FRAMEWORK_NAME-$FRAMEWORK_VERSION --user $USER_ID:$GROUP_ID --tty --privileged --interactive --gpus=all --network=host --device /dev/video0 --device /dev/snd -e DISPLAY=unix$DISPLAY --shm-size=4g --ulimit memlock=-1 --ulimit stack=67108864 -v /tmp/.X11-unix:/tmp/.X11-unix --group-add video --group-add sudo $IMAGE:$CONTAINER_NAME bash -c "echo \"export PS1='[$CONTAINER_NAME] \\\`whoami\\\`@\\\`hostname\\\`:\\\${PWD#*}$ '\" >> ~/.bashrc; bash")
+OUT=$(docker create -it $VOLUMES -w $WORKSPACE --name=$CONTAINER_NAME --label=$CONTAINER_LABEL=$USER --label=$CONTAINER_LABEL.USER=$USER --label=$CONTAINER_LABEL.VERSION=$MLC_VERSION --label=$CONTAINER_LABEL.WORK_MOUNT=$WORKSPACE_MOUNT --label=$CONTAINER_LABEL.DATA_MOUNT=$DATA_MOUNT --label=$CONTAINER_LABEL.FRAMEWORK=$FRAMEWORK_NAME-$FRAMEWORK_VERSION --label=$CONTAINER_LABEL.GPUS=$GPUS --user $USER_ID:$GROUP_ID --tty --privileged --interactive --gpus=$GPUS --network=host --device /dev/video0 --device /dev/snd -e DISPLAY=unix$DISPLAY --shm-size=4g --ulimit memlock=-1 --ulimit stack=67108864 -v /tmp/.X11-unix:/tmp/.X11-unix --group-add video --group-add sudo $IMAGE:$CONTAINER_NAME bash -c "echo \"export PS1='[$CONTAINER_NAME] \\\`whoami\\\`@\\\`hostname\\\`:\\\${PWD#*}$ '\" >> ~/.bashrc; bash")
 
 echo -e "\n[$CONTAINER_NAME] ready. Open the container with: mlc-open $CONTAINER_NAME\n"
