@@ -30,11 +30,11 @@ Tensorflow, MXNet, Pytorch
 
 Available versions for NVIDIA Ampere based GPUs (RTX 30x0, RTX A6000, A100):
 
-*  Tensorflow: 2.6.1, 2.5.0, 2.4.1, 2.4.0, 2.3.1-nvidia, 1.15.4-nvidia
+*  Tensorflow: 2.7.0, 2.6.1, 2.5.0, 2.4.1, 2.4.0, 2.3.1-nvidia, 1.15.4-nvidia
 
 *  MXNet: 1.8.0-nvidia
 
-*  Pytorch: 1.9.0, 1.8.0, 1.7.1, 1.7.0, 1.7.0-nvidia
+*  Pytorch: 1.10.0, 1.9.0, 1.8.0, 1.7.1, 1.7.0, 1.7.0-nvidia
 
 
 Example to create a container with the name 'my-container' as Tensorflow 1.15.4 with mounted user home directory as workspace use:
