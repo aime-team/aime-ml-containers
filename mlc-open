@@ -4,13 +4,17 @@ CONTAINER_NAME=$1
 
 if [[ $CONTAINER_NAME == "" ]]
 then
-  echo "Open an ml-container"
+  echo "Open a ml-container"
   echo -e "\nUsage: mlc-open container_name\n"
   exit -1
 fi
 
 function check_container_exists {
   docker container ps -a --filter=name=^/$1$ --filter=label=aime.mlc --format "{{.Names}}"
+}
+
+function get_container_user {
+  docker container ps -a --filter=name=^/$1$ --filter=label=aime.mlc --format "{{.Label \"aime.mlc.USER\"}}"
 }
 
 function check_container_running {
@@ -50,9 +54,9 @@ echo "["$CONTAINER_NAME"] opening shell to container"
 #docker container attach $CONTAINER_NAME
 USER_ID=$(id -u)
 GROUP_ID=$(id -g)
-SET_ENV=""
+SET_ENV="-e DISPLAY=$DISPLAY"
 if [[ -v NCCL_P2P_LEVEL ]]; then
-  SET_ENV="-e NCCL_P2P_LEVEL=$NCCL_P2P_LEVEL"
+  SET_ENV="$SET_ENV -e NCCL_P2P_LEVEL=$NCCL_P2P_LEVEL"
 fi
 
 docker exec -it $SET_ENV --user $USER_ID:$GROUP_ID $CONTAINER_NAME bash
