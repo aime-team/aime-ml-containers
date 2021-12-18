@@ -30,14 +30,32 @@ then
   exit -1
 fi
 
+function check_container_exists {
+  docker container ps -a --filter=name=^/$1$ --filter=label=aime.mlc --format "{{.Names}}"
+}
+
 function check_container_running {
   docker container ps --filter=name=^/$1$ --filter=label=aime.mlc --format "{{.Names}}"
 }
 
 
-CONTAINER_RUNNING=$(check_container_running $CONTAINER_NAME)
+USER_ID=$(id -u)
+GROUP_ID=$(id -g)
+CONTAINER_TAG=$CONTAINER_NAME._.$USER_ID
 
-if [[ $CONTAINER_NAME != $CONTAINER_RUNNING ]]
+if [[ $CONTAINER_TAG != $(check_container_exists $CONTAINER_TAG) ]]
+then  
+  CONTAINER_TAG=$CONTAINER_NAME
+  if [[ $CONTAINER_TAG != $(check_container_exists $CONTAINER_TAG) ]]
+  then
+    echo "["$CONTAINER_NAME"] does not exist."
+    exit -3
+  fi
+fi
+
+CONTAINER_RUNNING=$(check_container_running $CONTAINER_TAG)
+
+if [[ $CONTAINER_TAG != $CONTAINER_RUNNING ]]
 then
   echo "["$CONTAINER_NAME"] container not running."
   exit -2
@@ -62,6 +80,6 @@ fi
 if [[ $CONFIRMED == true ]]
 then
   echo -e "\n["$CONTAINER_NAME"] Stopping container ..."	
-  RESULT=$(docker container stop $CONTAINER_NAME)
+  RESULT=$(docker container stop $CONTAINER_TAG)
   echo -e "["$CONTAINER_NAME"] container stopped.\n"	
 fi

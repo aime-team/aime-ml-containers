@@ -17,13 +17,21 @@ function check_container_running {
   docker container ps --filter=name=^/$1$ --filter=label=aime.mlc --format "{{.Names}}"
 }
 
-if [[ $CONTAINER_NAME != $(check_container_exists $CONTAINER_NAME) ]]
-then
-  echo "["$CONTAINER_NAME"] does not exist."
-  exit -3
+USER_ID=$(id -u)
+GROUP_ID=$(id -g)
+CONTAINER_TAG=$CONTAINER_NAME._.$USER_ID
+
+if [[ $CONTAINER_TAG != $(check_container_exists $CONTAINER_TAG) ]]
+then  
+  CONTAINER_TAG=$CONTAINER_NAME
+  if [[ $CONTAINER_TAG != $(check_container_exists $CONTAINER_TAG) ]]
+  then
+    echo "["$CONTAINER_NAME"] does not exist."
+    exit -3
+  fi
 fi
 
-if [[ $CONTAINER_NAME == $(check_container_running $CONTAINER_NAME) ]]
+if [[ $CONTAINER_TAG == $(check_container_running $CONTAINER_TAG) ]]
 then
   echo "["$CONTAINER_NAME"] container already running"
   exit -3  
@@ -33,10 +41,10 @@ echo -e "\n["$CONTAINER_NAME"] Starting container ..."
 
 USER_ID=$(id -u)
 GROUP_ID=$(id -g)
-OUT=$(docker start $CONTAINER_NAME)
+OUT=$(docker start $CONTAINER_TAG)
 EXIT_CODE=$?
 
-if [[ $OUT == $CONTAINER_NAME ]]
+if [[ $OUT == $CONTAINER_TAG ]]
 then
   echo -e "["$CONTAINER_NAME"] container started.\n\nTo open a shell to container use: mlc-open $CONTAINER_NAME"
 else

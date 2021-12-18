@@ -28,6 +28,8 @@ done
 
 echo -e "\nAvailable ml-containers are:\n"
 
-OUTPUT=$(docker container ls -a --filter=$FILTER --format "table [{{.Names}}]\t{{.Label \"aime.mlc.FRAMEWORK\"}}\t{{.Status}}")
-echo "${OUTPUT/\[NAMES\]  /CONTAINER}"-
+OUTPUT=$(docker container ls -a --filter=$FILTER --format "table [{{index (split .Names \"._.\") 0}}]\t{{.Label \"aime.mlc.FRAMEWORK\"}}\t{{.Status}}")
+
+echo "${OUTPUT/\[78\]  /CONTAINER}"-
+
 echo -e ""

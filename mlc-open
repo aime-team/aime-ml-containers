@@ -35,31 +35,37 @@ function get_container_active {
   fi
 }
 
-if [[ $CONTAINER_NAME != $(check_container_exists $CONTAINER_NAME) ]]
-then
-  echo "["$CONTAINER_NAME"] does not exist."
-  exit -3
+USER_ID=$(id -u)
+GROUP_ID=$(id -g)
+CONTAINER_TAG=$CONTAINER_NAME._.$USER_ID
+
+if [[ $CONTAINER_TAG != $(check_container_exists $CONTAINER_TAG) ]]
+then  
+  CONTAINER_TAG=$CONTAINER_NAME
+  if [[ $CONTAINER_TAG != $(check_container_exists $CONTAINER_TAG) ]]
+  then
+    echo "["$CONTAINER_NAME"] does not exist."
+    exit -3
+  fi
 fi
 
-if [[ $CONTAINER_NAME != $(check_container_running $CONTAINER_NAME) ]]
+if [[ $CONTAINER_TAG != $(check_container_running $CONTAINER_TAG) ]]
 then
   echo "["$CONTAINER_NAME"] starting container"
-  docker container start $CONTAINER_NAME >> /dev/null
+  docker container start $CONTAINER_TAG >> /dev/null
 else
   echo "["$CONTAINER_NAME"] container already running"
 fi
 
 echo "["$CONTAINER_NAME"] opening shell to container"
 
-#docker container attach $CONTAINER_NAME
-USER_ID=$(id -u)
-GROUP_ID=$(id -g)
+#docker attach to container
 SET_ENV="-e DISPLAY=$DISPLAY"
 if [[ -v NCCL_P2P_LEVEL ]]; then
   SET_ENV="$SET_ENV -e NCCL_P2P_LEVEL=$NCCL_P2P_LEVEL"
 fi
 
-docker exec -it $SET_ENV --user $USER_ID:$GROUP_ID $CONTAINER_NAME bash
+docker exec -it $SET_ENV --user $USER_ID:$GROUP_ID $CONTAINER_TAG bash
 EXIT_CODE=$?
 
 if [[ $EXIT_CODE == 1 ]]
@@ -69,13 +75,13 @@ else
   echo "["$CONTAINER_NAME"] container shell closed."
 fi
 
-ACTIVE=$(get_container_active $CONTAINER_NAME)
+ACTIVE=$(get_container_active $CONTAINER_TAG)
 
 if [ $ACTIVE == "True" ]
 then
   echo "["$CONTAINER_NAME"] container is active, keeped running."
 else
   echo "["$CONTAINER_NAME"] container is inactive, stopping container ..."
-  RESULT=$(docker container stop $CONTAINER_NAME)
+  RESULT=$(docker container stop $CONTAINER_TAG)
   echo -e "["$CONTAINER_NAME"] container stopped.\n"  
 fi

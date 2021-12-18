@@ -42,13 +42,22 @@ function check_container_running {
   docker container ps --filter=name=^/$1$ --filter=label=aime.mlc --format "{{.Names}}"
 }
 
-if [[ $CONTAINER_NAME != $(check_container_exists $CONTAINER_NAME) ]]
-then
-  echo "["$CONTAINER_NAME"] does not exists."
-  exit -3
+
+USER_ID=$(id -u)
+GROUP_ID=$(id -g)
+CONTAINER_TAG=$CONTAINER_NAME._.$USER_ID
+
+if [[ $CONTAINER_TAG != $(check_container_exists $CONTAINER_TAG) ]]
+then  
+  CONTAINER_TAG=$CONTAINER_NAME
+  if [[ $CONTAINER_TAG != $(check_container_exists $CONTAINER_TAG) ]]
+  then
+    echo "["$CONTAINER_NAME"] does not exist."
+    exit -3
+  fi
 fi
 
-if [[ $CONTAINER_NAME == $(check_container_running $CONTAINER_NAME) ]]
+if [[ $CONTAINER_TAG == $(check_container_running $CONTAINER_TAG) ]]
 then
   echo -e "["$CONTAINER_NAME"] can not be removed: container is running\n"
   echo -e "["$CONTAINER_NAME"] container has to be stopped before it can be removed."
@@ -64,9 +73,10 @@ read -p "Delete container? (Y/N) " -n 1 -r
 echo 
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-  CONTAINER_IMAGE=$(get_container_image $CONTAINER_NAME)
-  OUT=$(docker container rm $CONTAINER_NAME)
-  echo -e "Deleting Image: " $CONTAINER_IMAGE
+  CONTAINER_IMAGE=$(get_container_image $CONTAINER_TAG)
+  echo -e "\nDeleting container ..."
+  OUT=$(docker container rm $CONTAINER_TAG)
+  echo -e "Deleting container image ..."
   OUT=$(docker image rm $CONTAINER_IMAGE)
   echo -e "\n["$CONTAINER_NAME"] container removed.\n"
 else
