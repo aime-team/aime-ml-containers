@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FILTER=label=aime.mlc=$USER
+LIST_ALL=false
 
 ARGS=()
 
@@ -8,7 +8,7 @@ for i in "$@"
 do
 case $i in
     -a|--all)
-	FILTER=label=aime.mlc    
+    LIST_ALL=true
 	;;
     -h|--help)
     echo -e "List available ml-containers"
@@ -28,8 +28,14 @@ done
 
 echo -e "\nAvailable ml-containers are:\n"
 
-OUTPUT=$(docker container ls -a --filter=$FILTER --format "table [{{index (split .Names \"._.\") 0}}]\t{{.Label \"aime.mlc.FRAMEWORK\"}}\t{{.Status}}")
+if [ "$LIST_ALL" = true ] ; then
+    FILTER=label=aime.mlc
+    OUTPUT=$(docker container ls -a --filter=$FILTER --format "table [{{index (split .Names \"._.\") 0}}]\t{{.Label \"aime.mlc.USER\"}}\t{{.Status}}")
+else
+    FILTER=label=aime.mlc=$USER
+    OUTPUT=$(docker container ls -a --filter=$FILTER --format "table [{{index (split .Names \"._.\") 0}}]\t{{.Label \"aime.mlc.FRAMEWORK\"}}\t{{.Status}}")    
+fi
 
-echo "${OUTPUT/\[78\]  /CONTAINER}"-
+echo "${OUTPUT/\[78\]     /CONTAINER}"
 
 echo -e ""
