@@ -134,9 +134,8 @@ function print_help {
   for K in "${!FRAMEWORK_ENTRIES[@]}"
   do
     echo "$K: $(get_framework_versions $K)"
+    echo -e ""
   done
-
-  echo ""
 }
 
 
@@ -179,7 +178,7 @@ then
   else
     echo -e "\nError: unavailable framework version '$FRAMEWORK_VERSION'"
   fi
-  echo -e "\nAvailable '$FRAMEWORK_NAME' versions are: $available_versions"
+  echo -e "\n\nAvailable '$FRAMEWORK_NAME' versions are: $available_versions"
   exit -3
 fi
 
