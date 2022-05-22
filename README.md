@@ -28,9 +28,9 @@ Available frameworks:
 
 Tensorflow, MXNet, Pytorch
 
-Available versions for NVIDIA Ampere based GPUs (RTX 30x0, RTX A6000, A100):
+Available versions for NVIDIA Ampere based GPUs (RTX 30x0, RTX A5000/A6000, A100):
 
-*  Tensorflow: 2.8.0, 2.7.0, 2.6.1, 2.5.0, 2.4.1, 2.4.0, 2.3.1-nvidia, 1.15.4-nvidia
+*  Tensorflow: 2.9.0, 2.8.0, 2.7.0, 2.6.1, 2.5.0, 2.4.1, 2.4.0, 2.3.1-nvidia, 1.15.4-nvidia
 
 *  MXNet: 1.8.0-nvidia
 
