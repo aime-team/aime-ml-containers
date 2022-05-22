@@ -36,6 +36,9 @@ then
   SUDO=""
 fi
 
+# fix for unsafe repository warning
+git config --global --add safe.directory $MLC_PATH 
+
 BRANCH=$(basename $(git symbolic-ref HEAD))
 
 if [[ $CONFIRMED == false ]]
