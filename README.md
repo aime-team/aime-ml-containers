@@ -30,9 +30,9 @@ Tensorflow, Pytorch
 
 Available versions for NVIDIA Ada Lovelace based GPUs (RTX 4090, RTX 6000, L40):
 
-*  Tensorflow: 
+*  Tensorflow: 2.9.1-nvidia
 
-*  Pytorch: 
+*  Pytorch: 1.13.0a-nvidia, 1.12.1-aime
 
 
 Example to create a container with the name 'my-container' as Tensorflow 1.15.5 with mounted user home directory as workspace use:
