@@ -1,3 +1,4 @@
+Tensorflow, 2.11.0, CUDA_AMPERE, aimehub/tensorflow-2.11.0-cuda11.2
 Tensorflow, 2.10.0, CUDA_AMPERE, aimehub/tensorflow-2.10.0-cuda11.2
 Tensorflow, 2.9.2-jlab, CUDA_AMPERE, aimehub/tensorflow-2.9.2-jlab-cuda11.2
 Tensorflow, 2.9.0, CUDA_AMPERE, aimehub/tensorflow-2.9.0-cuda11.2
