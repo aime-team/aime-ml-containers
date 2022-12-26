@@ -1,5 +1,6 @@
 CUDA, 11.8.0, CUDA_LOVELACE, aimehub/cuda-11.8.0
 Tensorflow, 2.11.0-aime, CUDA_LOVELACE, aimehub/tensorflow-2.11.0-aime-cuda11.8
+Tensorflow, 2.10.1-nvidia, CUDA_LOVELACE, aimehub/tensorflow-2.10.1-nvidia-cuda11.8
 Tensorflow, 2.10.0-nvidia, CUDA_LOVELACE, aimehub/tensorflow-2.10.0-nvidia-cuda11.8
 Tensorflow, 2.9.1-nvidia, CUDA_LOVELACE, aimehub/tensorflow-2.9.1-nvidia-cuda11.8
 Tensorflow, 2.10.0, CUDA_AMPERE, aimehub/tensorflow-2.10.0-cuda11.2
