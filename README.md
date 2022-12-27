@@ -30,7 +30,7 @@ Tensorflow, Pytorch
 
 Available versions for NVIDIA Ada Lovelace based GPUs (RTX 4090, RTX 6000, L40):
 
-*  Tensorflow: 2.9.1-nvidia
+*  Tensorflow: 2.11.0-aime, 2.10.1-nvidia, 2.10.0-nvidia, 2.9.1-nvidia
 
 *  Pytorch: 1.13.0a-nvidia, 1.12.1-aime
 
