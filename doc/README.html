@@ -26,14 +26,13 @@
 <p><strong>mlc-create container_name framework version [-w=workspace_dir] [-d=data_dir]</strong></p>
 <p>Create a new machine learning container</p>
 <p>Available frameworks:</p>
-<p>Tensorflow, MXNet, Pytorch</p>
-<p>Available versions for NVIDIA Ampere based GPUs (RTX 30x0, RTX A5000/A6000, A100):</p>
+<p>Tensorflow, Pytorch</p>
+<p>Available versions for NVIDIA Ada Lovelace based GPUs (RTX 4090, RTX 6000 Ada, L40):</p>
 <ul>
-<li><p>Tensorflow: 2.9.0, 2.8.0, 2.7.0, 2.6.1, 2.5.0, 2.4.1, 2.4.0, 2.3.1-nvidia, 1.15.4-nvidia</p></li>
-<li><p>MXNet: 1.8.0-nvidia</p></li>
-<li><p>Pytorch: 1.11.0, 1.10.2-aime, 1.10.0, 1.9.0, 1.8.0, 1.7.1, 1.7.0, 1.7.0-nvidia</p></li>
+<li><p>Tensorflow: 2.11.0-nvidia, 2.11.0-aime, 2.10.1-nvidia, 2.10.0-nvidia, 2.9.1-nvidia</p></li>
+<li><p>Pytorch: 1.14.0a-nvidia, 1.13.1-aime, 1.13.0a-nvidia, 1.12.1-aime</p></li>
 </ul>
-<p>Example to create a container with the name 'my-container' as Tensorflow 1.15.4 with mounted user home directory as workspace use:</p>
+<p>Example to create a container with the name 'my-container' as Tensorflow 1.15.5 with mounted user home directory as workspace use:</p>
 <pre><code>&gt; mlc-create my-container Tensorflow 1.15.4 -w=/home/admin
 </code></pre>
 <h3 id="open-a-machine-learning-container">Open a machine learning container</h3>
