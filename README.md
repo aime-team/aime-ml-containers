@@ -6,7 +6,7 @@ Easily install, run and manage Docker containers for the most common deep learni
 
 ## Features
 
-* Setup and run a specific version of Tensorflow, Pytorch or Mxnet with one simple command
+* Setup and run a specific version of Tensorflow or Pytorch with one simple command
 * Run different versions of machine learning frameworks and required libraries in parallel
 * manages required libraries (CUDA, CUDNN, CUBLAS, etc.) in containers, without compromising the host installation
 * Clear separation of user code and framework installation, test your code with a different framework version in minutes
@@ -15,6 +15,28 @@ Easily install, run and manage Docker containers for the most common deep learni
 * multi GPU: allocate GPUs per user, container or session
 * Runs with the same performance as a bare metal installation
 * Repository of all major deep learning framework versions as containers
+
+## Supported ML containers
+
+### Tensorflow Containers
+
+| Container Name | Build  | Tensorflow Version | Ubuntu Version | Python Version | Package Manager | CUDA Version | CuDNN Version | NVIDIA driver version |
+|:----------------:|:--------:|:--------------------:|:----------------:|:----------------:|:-----------------:|:--------------:|:---------------:|:-----------------------:|
+| 2.11.0-nvidia  | NVIDIA | 2.11.0             | 20.04          | 3.8.10         | pip 22.3.1      | 12.0.146     | 8.7.0.84      | 525.85.12             |
+| 2.11.0-aime    | AIME   | 2.11.0             | 20.04          | 3.8.10         | pip 20.0.2      | 11.8.89      | 8.6.0.163     | 520.61.05             |
+| 2.10.1-nvidia  | NVIDIA | 2.10.1             | 20.04          | 3.8.10         | pip 22.3.1      | 11.8.89      | 8.7.0.84      | 520.61.05             |
+| 2.10.0-nvidia  | NVIDIA | 2.10.0             | 20.04          | 3.8.10         | pip 22.2.2      | 11.8.89      | 8.6.0.163     | 520.61.05             |
+| 2.9.1-nvidia   | NVIDIA | 2.9.1              | 20.04          | 3.8.10         | pip 22.2.2      | 11.8.89      | 8.6.0.163     | 520.61.03             |
+
+### Pytorch Containers
+
+| Container Name | Build  | Pytorch  | Ubuntu Version | Python Version | Package Manager | CUDA Version | CuDNN Version | NVIDIA driver version |
+|:----------------:|:--------:|:----------:|:----------------:|:----------------:|:-----------------:|:--------------:|:---------------:|:-----------------------:|
+| 1.14.0a-nvidia | NVIDIA | 1.14.0a0 | 20.04          | 3.8.10         | pip 21.2.4      | 12.0.146      | 8.7.0.84      | 525.85.11             |
+| 1.13.1-aime    | AIME   | 1.13.1   | 20.04          | 3.8.10         | pip 20.0.2      | 11.8.89      | 8.6.0.163     | 520.61.05             |
+| 1.13.0a-nvidia | NVIDIA | 1.13.0a0 | 20.04          | 3.8.13         | pip 21.2.4      | 11.8.89      | 8.6.0.163     | 520.61.03             |
+| 1.12.1-aime    | AIME   | 1.12.1   | 20.04          | 3.8.10         | pip 20.0.2      | 11.8.89      | 8.6.0.163     | 520.61.05             |
+
 
 ## Usage
 
@@ -32,7 +54,7 @@ Available versions for NVIDIA Ada Lovelace based GPUs (RTX 4090, RTX 6000 Ada, L
 
 *  Tensorflow: 2.11.0-nvidia, 2.11.0-aime, 2.10.1-nvidia, 2.10.0-nvidia, 2.9.1-nvidia
 
-*  Pytorch: 1.14.0a-nvidia, 1.13.1-aime, 1.13.0a-nvidia, 1.12.1-aime
+*  Pytorch: 2.0.0dev230208, 1.14.0a-nvidia, 1.13.1-aime, 1.13.0a-nvidia, 1.12.1-aime
 
 
 Example to create a container with the name 'my-container' as Tensorflow 1.15.5 with mounted user home directory as workspace use:
@@ -95,7 +117,6 @@ Available ml-containers are:
 CONTAINER           FRAMEWORK                  STATUS
 [torch-vid2vid]     Pytorch-1.2.0              Up 2 days
 [tf1.15.0]          Tensorflow-1.15.0          Up 8 minutes
-[mx-container]      Mxnet-1.5.0                Exited (137) 1 day ago
 [tf1-nvidia]        Tensorflow-1.14.0_nvidia   Exited (137) 1 week ago
 [tf1.13.2]          Tensorflow-1.13.2          Exited (137) 2 weeks ago
 [torch1.3]          Pytorch-1.3.0              Exited (137) 3 weeks ago
