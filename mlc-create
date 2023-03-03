@@ -4,7 +4,6 @@ MLC_VERSION=3
 INTERACTIVE=false
 GPUS="all"
 SUPPORTED_ARCH="CUDA_ADA"
-SHM_SIZE=8g
 WORKSPACE_MOUNT=$HOME/workspace
 DATA_MOUNT=
 
@@ -218,7 +217,7 @@ CONTAINER_LABEL="aime.mlc"
 WORKSPACE=/workspace
 DATA=/data
 
-docker run -v $WORKSPACE_MOUNT:$WORKSPACE -w $WORKSPACE --name=$CONTAINER_TAG --tty --privileged  --gpus=$GPUS --network=host --device /dev/video0 --device /dev/snd --shm-size=$SHM_SIZE --ulimit memlock=-1 --ulimit stack=67108864 -v /tmp/.X11-unix:/tmp/.X11-unix $IMAGE bash -c "echo \"export PS1='[$CONTAINER_NAME] \\\`whoami\\\`@\\\`hostname\\\`:\\\${PWD#*}$ '\" >> ~/.bashrc; apt-get update -y > /dev/null; apt-get install sudo git -q -y > /dev/null; addgroup --gid $GROUP_ID $USER > /dev/null; adduser --uid $USER_ID --gid $GROUP_ID $USER --disabled-password --gecos aime > /dev/null; passwd -d $USER; echo \"$USER ALL=(ALL) NOPASSWD: ALL\" > /etc/sudoers.d/${USER}_no_password; chmod 440 /etc/sudoers.d/${USER}_no_password; exit"
+docker run -v $WORKSPACE_MOUNT:$WORKSPACE -w $WORKSPACE --name=$CONTAINER_TAG --tty --privileged  --gpus=$GPUS --network=host --device /dev/video0 --device /dev/snd --ipc=host --ulimit memlock=-1 --ulimit stack=67108864 -v /tmp/.X11-unix:/tmp/.X11-unix $IMAGE bash -c "echo \"export PS1='[$CONTAINER_NAME] \\\`whoami\\\`@\\\`hostname\\\`:\\\${PWD#*}$ '\" >> ~/.bashrc; apt-get update -y > /dev/null; apt-get install sudo git -q -y > /dev/null; addgroup --gid $GROUP_ID $USER > /dev/null; adduser --uid $USER_ID --gid $GROUP_ID $USER --disabled-password --gecos aime > /dev/null; passwd -d $USER; echo \"$USER ALL=(ALL) NOPASSWD: ALL\" > /etc/sudoers.d/${USER}_no_password; chmod 440 /etc/sudoers.d/${USER}_no_password; exit"
 OUT=$(docker commit $CONTAINER_TAG $IMAGE:$CONTAINER_TAG)
 OUT=$(docker rm $CONTAINER_TAG)
 
@@ -227,6 +226,6 @@ if [[ $DATA_MOUNT != "" ]]
 then
   VOLUMES="$VOLUMES -v $DATA_MOUNT:$DATA"
 fi
-OUT=$(docker create -it $VOLUMES -w $WORKSPACE --name=$CONTAINER_TAG --label=$CONTAINER_LABEL=$USER --label=$CONTAINER_LABEL.NAME=$CONTAINER_NAME --label=$CONTAINER_LABEL.USER=$USER --label=$CONTAINER_LABEL.VERSION=$MLC_VERSION --label=$CONTAINER_LABEL.WORK_MOUNT=$WORKSPACE_MOUNT --label=$CONTAINER_LABEL.DATA_MOUNT=$DATA_MOUNT --label=$CONTAINER_LABEL.FRAMEWORK=$FRAMEWORK_NAME-$FRAMEWORK_VERSION --label=$CONTAINER_LABEL.GPUS=$GPUS --user $USER_ID:$GROUP_ID --tty --privileged --interactive --gpus=$GPUS --network=host --device /dev/video0 --device /dev/snd --shm-size=$SHM_SIZE --ulimit memlock=-1 --ulimit stack=67108864 -v /tmp/.X11-unix:/tmp/.X11-unix --group-add video --group-add sudo $IMAGE:$CONTAINER_TAG bash -c "echo \"export PS1='[$CONTAINER_NAME] \\\`whoami\\\`@\\\`hostname\\\`:\\\${PWD#*}$ '\" >> ~/.bashrc; bash")
+OUT=$(docker create -it $VOLUMES -w $WORKSPACE --name=$CONTAINER_TAG --label=$CONTAINER_LABEL=$USER --label=$CONTAINER_LABEL.NAME=$CONTAINER_NAME --label=$CONTAINER_LABEL.USER=$USER --label=$CONTAINER_LABEL.VERSION=$MLC_VERSION --label=$CONTAINER_LABEL.WORK_MOUNT=$WORKSPACE_MOUNT --label=$CONTAINER_LABEL.DATA_MOUNT=$DATA_MOUNT --label=$CONTAINER_LABEL.FRAMEWORK=$FRAMEWORK_NAME-$FRAMEWORK_VERSION --label=$CONTAINER_LABEL.GPUS=$GPUS --user $USER_ID:$GROUP_ID --tty --privileged --interactive --gpus=$GPUS --network=host --device /dev/video0 --device /dev/snd --ipc=host --ulimit memlock=-1 --ulimit stack=67108864 -v /tmp/.X11-unix:/tmp/.X11-unix --group-add video --group-add sudo $IMAGE:$CONTAINER_TAG bash -c "echo \"export PS1='[$CONTAINER_NAME] \\\`whoami\\\`@\\\`hostname\\\`:\\\${PWD#*}$ '\" >> ~/.bashrc; bash")
 
 echo -e "\n[$CONTAINER_NAME] ready. Open the container with: mlc-open $CONTAINER_NAME\n"
