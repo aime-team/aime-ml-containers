@@ -22,6 +22,7 @@ Easily install, run and manage Docker containers for the most common deep learni
 
 | Container Name | Build  | Tensorflow Version | Ubuntu Version | Python Version | Package Manager | CUDA Version | CuDNN Version | NVIDIA driver version |
 |:----------------:|:--------:|:--------------------:|:----------------:|:----------------:|:-----------------:|:--------------:|:---------------:|:-----------------------:|
+| 2.12.0 | Official | 2.12.0 | 20.04 | 3.8.10 | pip 23.0.1 | 11.8.89 | 8.6.0.163 | 525.85.12 |
 | 2.11.0-nvidia  | NVIDIA | 2.11.0             | 20.04          | 3.8.10         | pip 22.3.1      | 12.0.146     | 8.7.0.84      | 525.85.12             |
 | 2.11.0-aime    | AIME   | 2.11.0             | 20.04          | 3.8.10         | pip 20.0.2      | 11.8.89      | 8.6.0.163     | 520.61.05             |
 | 2.10.1-nvidia  | NVIDIA | 2.10.1             | 20.04          | 3.8.10         | pip 22.3.1      | 11.8.89      | 8.7.0.84      | 520.61.05             |

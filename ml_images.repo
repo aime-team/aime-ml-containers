@@ -1,3 +1,4 @@
+Tensorflow, 2.12.0, CUDA_ADA, aimehub/tensorflow-2.12.0-cuda11.8
 Tensorflow, 2.11.0-nvidia, CUDA_ADA, aimehub/tensorflow-2.11.0-nvidia-cuda12.0
 Tensorflow, 2.11.0-aime, CUDA_ADA, aimehub/tensorflow-2.11.0-aime-cuda11.8
 Tensorflow, 2.10.1-nvidia, CUDA_ADA, aimehub/tensorflow-2.10.1-nvidia-cuda11.8
