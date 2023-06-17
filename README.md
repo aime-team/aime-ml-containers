@@ -33,6 +33,7 @@ Easily install, run and manage Docker containers for the most common deep learni
 
 | Container Name | Build  | Pytorch  | Ubuntu Version | Python Version | Package Manager | CUDA Version | CuDNN Version | NVIDIA driver version |
 |:----------------:|:--------:|:----------:|:----------------:|:----------------:|:-----------------:|:--------------:|:---------------:|:-----------------------:|
+| 2.0.1 | Official | 2.0.1 | 20.04          | 3.8.10         | pip 20.0.2      | 11.8.89      | 8.9.0.131     | 520.61.05             |
 | 2.0.0 | Official | 2.0.0 | 20.04          | 3.8.10         | pip 20.0.2      | 11.8.89      | 8.6.0.163     | 520.61.05             |
 | 1.14.0a-nvidia | NVIDIA   | 1.14.0a0          | 20.04          | 3.8.10         | pip 21.2.4      | 12.0.146     | 8.7.0.84      | 525.85.11             |
 | 1.13.1-aime    | AIME     | 1.13.1            | 20.04          | 3.8.10         | pip 20.0.2      | 11.8.89      | 8.6.0.163     | 520.61.05             |
