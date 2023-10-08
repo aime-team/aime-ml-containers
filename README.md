@@ -22,6 +22,9 @@ Easily install, run and manage Docker containers for the most common deep learni
 
 | Container Name | Build  | Tensorflow Version | Ubuntu Version | Python Version | Package Manager | CUDA Version | CuDNN Version | NVIDIA driver version |
 |:----------------:|:--------:|:--------------------:|:----------------:|:----------------:|:-----------------:|:--------------:|:---------------:|:-----------------------:|
+| 2.14.0 | Official | 2.14.0 | 22.04 | 3.11.0rc1 | pip 23.2.1 | 11.8.89 | 8.6.0.163 | 525.85.12 |
+| 2.13.1-aime | AIME | 2.13.1 | 22.04 | 3.10.12 | pip 22.0.2 | 11.8.89 | 8.9.0.131 | 520.61.05 |
+| 2.13.0 | Official | 2.13.0 | 20.04 | 3.8.10 | pip 23.0.1 | 11.8.89 | 8.6.0.163 | 525.85.12 |
 | 2.12.0 | Official | 2.12.0 | 20.04 | 3.8.10 | pip 23.0.1 | 11.8.89 | 8.6.0.163 | 525.85.12 |
 | 2.11.0-nvidia  | NVIDIA | 2.11.0             | 20.04          | 3.8.10         | pip 22.3.1      | 12.0.146     | 8.7.0.84      | 525.85.12             |
 | 2.11.0-aime    | AIME   | 2.11.0             | 20.04          | 3.8.10         | pip 20.0.2      | 11.8.89      | 8.6.0.163     | 520.61.05             |
@@ -33,6 +36,8 @@ Easily install, run and manage Docker containers for the most common deep learni
 
 | Container Name | Build  | Pytorch  | Ubuntu Version | Python Version | Package Manager | CUDA Version | CuDNN Version | NVIDIA driver version |
 |:----------------:|:--------:|:----------:|:----------------:|:----------------:|:-----------------:|:--------------:|:---------------:|:-----------------------:|
+| 2.1.0-aime | AIME | 2.1.0 | 22.04 | 3.10.12 | pip 22.0.2 | 11.8.89 | 8.9.0.131 | 520.61.05 |
+| 2.1.0 | Official | 2.1.0 | 22.04 | 3.10.13 | conda 23.9.0 | 12.1.105 | 8.9.0.131 | 530.30.02 |
 | 2.0.1-aime | AIME | 2.0.1 | 22.04 | 3.10.12 | pip 22.0.2 | 11.8.89 | 8.9.0.131 | 520.61.05 |
 | 2.0.1 | Official | 2.0.1 | 20.04          | 3.8.10         | pip 20.0.2      | 11.8.89      | 8.9.0.131     | 520.61.05             |
 | 2.0.0 | Official | 2.0.0 | 20.04          | 3.8.10         | pip 20.0.2      | 11.8.89      | 8.6.0.163     | 520.61.05             |
@@ -53,17 +58,17 @@ Available frameworks:
 
 Tensorflow, Pytorch
 
-Available versions for NVIDIA Ada Lovelace based GPUs (RTX 4090, RTX 6000 Ada, L40):
+Available versions for NVIDIA Ada Lovelace based GPUs (RTX 4080/4090, RTX 4500/5000/6000 Ada, L40, L40S):
 
-*  Tensorflow: 2.12.0, 2.11.0-nvidia, 2.11.0-aime, 2.10.1-nvidia, 2.10.0-nvidia, 2.9.1-nvidia
+*  Tensorflow: 2.14.0, 2.13.1-aime, 2.13.0, 2.12.0, 2.11.0-nvidia, 2.11.0-aime, 2.10.1-nvidia, 2.10.0-nvidia, 2.9.1-nvidia
 
-*  Pytorch: 2.0.1-aime, 2.0.1, 2.0.0, 1.14.0a-nvidia, 1.13.1-aime, 1.13.0a-nvidia, 1.12.1-aime
+*  Pytorch: 2.1.0-aime, 2.1.0, 2.0.1-aime, 2.0.1, 2.0.0, 1.14.0a-nvidia, 1.13.1-aime, 1.13.0a-nvidia, 1.12.1-aime
 
 
-Example to create a container with the name 'my-container' as Tensorflow 1.15.5 with mounted user home directory as workspace use:
+Example to create a container with the name 'my-container' as Tensorflow 2.12.0 with mounted user home directory as workspace use:
 
 ```
-> mlc-create my-container Tensorflow 1.15.4 -w=/home/admin
+> mlc-create my-container Tensorflow 2.12.0 -w=/home/admin
 ```
 
 
