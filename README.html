@@ -1,0 +1,532 @@
+
+    <html>
+      <head>
+        <title>README.md</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+      </head>
+      <body>
+        <div id='content'>
+    <h1 id="aime-ml-containers">AIME ML Containers</h1>
+<p>AIME machine learning container management system.</p>
+<p>Easily install, run and manage Docker containers for the most common deep learning frameworks.</p>
+<h2 id="features">Features</h2>
+<ul>
+<li>Setup and run a specific version of Tensorflow or Pytorch with one simple command</li>
+<li>Run different versions of machine learning frameworks and required libraries in parallel</li>
+<li>manages required libraries (CUDA, CUDNN, CUBLAS, etc.) in containers, without compromising the host installation</li>
+<li>Clear separation of user code and framework installation, test your code with a different framework version in minutes</li>
+<li>multi session: open and run many shell session on a single container simultaneously</li>
+<li>multi user: separate container space for each user</li>
+<li>multi GPU: allocate GPUs per user, container or session</li>
+<li>Runs with the same performance as a bare metal installation</li>
+<li>Repository of all major deep learning framework versions as containers</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<h3 id="create-a-machine-learning-container">Create a machine learning container</h3>
+<p><strong>mlc-create container_name framework version [-w=workspace_dir] [-d=data_dir]</strong></p>
+<p>Create a new machine learning container</p>
+<p>Available frameworks:</p>
+<p>Tensorflow, Pytorch</p>
+<p>Available versions for NVIDIA Ada Lovelace based GPUs (RTX 4080/4090, RTX 4500/5000/6000 Ada, L40, L40S):</p>
+<ul>
+<li><p>Tensorflow: 2.14.0, 2.13.1-aime, 2.13.0, 2.12.0, 2.11.0-nvidia, 2.11.0-aime, 2.10.1-nvidia, 2.10.0-nvidia, 2.9.1-nvidia</p></li>
+<li><p>Pytorch: 2.1.0-aime, 2.1.0, 2.0.1-aime, 2.0.1, 2.0.0, 1.14.0a-nvidia, 1.13.1-aime, 1.13.0a-nvidia, 1.12.1-aime</p></li>
+</ul>
+<p>Example to create a container with the name 'my-container' as Tensorflow 2.12.0 with mounted user home directory as workspace use:</p>
+<pre><code>&gt; mlc-create my-container Tensorflow 2.12.0 -w=/home/admin
+</code></pre>
+<h3 id="open-a-machine-learning-container">Open a machine learning container</h3>
+<p><strong>mlc-open container_name</strong></p>
+<p>To open the created machine learning container "my-container"</p>
+<pre><code>&gt; mlc-open my-container
+</code></pre>
+<p>Will output:</p>
+<pre><code>[my-container] starting container
+[my-container] opening shell to container
+
+________                               _______________
+___  __/__________________________________  ____/__  /________      __
+__  /  _  _ \_  __ \_  ___/  __ \_  ___/_  /_   __  /_  __ \_ | /| / /
+_  /   /  __/  / / /(__  )/ /_/ /  /   _  __/   _  / / /_/ /_ |/ |/ /
+/_/    \___//_/ /_//____/ \____//_/    /_/      /_/  \____/____/|__/
+
+
+You are running this container as user with ID 1000 and group 1000,
+which should map to the ID and group for your user on the Docker host. Great!
+
+[my-container] admin@aime01:/workspace$
+</code></pre>
+<p>The container is run with the access rights of the user. To use privileged rights like for installing packages with 'apt' within the container use 'sudo'. The default is that no password is needed for sudo, to change this behaviour set a password with 'passwd'.</p>
+<p>Multiple instances of a container can be opened with mlc-open. Each instance runs in its own process.</p>
+<p>To exit an opened shell to the container type 'exit' on the command line. The last exited shell will automatically stop the container.</p>
+<h3 id="list-available-machine-learning-containers">List available machine learning containers</h3>
+<p><strong>mlc-list</strong> will list all available containers for the current user</p>
+<pre><code>&gt; mlc-list
+</code></pre>
+<p>will output for example:</p>
+<pre><code>Available ml-containers are:
+
+CONTAINER           FRAMEWORK                  STATUS
+[torch-vid2vid]     Pytorch-1.2.0              Up 2 days
+[tf1.15.0]          Tensorflow-1.15.0          Up 8 minutes
+[tf1-nvidia]        Tensorflow-1.14.0_nvidia   Exited (137) 1 week ago
+[tf1.13.2]          Tensorflow-1.13.2          Exited (137) 2 weeks ago
+[torch1.3]          Pytorch-1.3.0              Exited (137) 3 weeks ago
+[tf2-gpt2]          Tensorflow-2.0.0           Exited (137) 7 hours ago
+</code></pre>
+<h3 id="list-active-machine-learning-containers">List active machine learning containers</h3>
+<p><strong>mlc-stats</strong> show all current running ml containers and their CPU and memory usage</p>
+<pre><code>&gt; mlc-stats
+
+Running ml-containers are:
+
+CONTAINER           CPU %               MEM USAGE / LIMIT
+[torch-vid2vid]     4.93%               8.516GiB / 63.36GiB
+[tf1.15.0]          7.26%               9.242GiB / 63.36GiB
+</code></pre>
+<h3 id="start-machine-learning-containers">Start machine learning containers</h3>
+<p><strong>mlc-start container_name</strong> to explicitly start a container</p>
+<p>mlc-start is a way to start the container to run installed background processes, like an installed web server, on the container without the need to open an interactive shell to it.</p>
+<p>For opening a shell to the container just use 'mlc-open', which will automatically start the container if the container is not already running.</p>
+<h3 id="stop-machine-learning-containers">Stop machine learning containers</h3>
+<p><strong>mlc-stop container_name [-Y]</strong> to explicitly stop a container.</p>
+<p>mlc-stop on a container is comparable to a shutdown of a computer, all activate processes and open shells to the container will be terminated.</p>
+<p>To force a stop on a container use:</p>
+<pre><code>mlc-stop my-container -Y
+</code></pre>
+<h3 id="removedelete-a-machine-learning-container">Remove/Delete a machine learning container</h3>
+<p><strong>mlc-remove container_name</strong> to remove the container.</p>
+<p>Warning: the container will be unrecoverable deleted only data stored in the /workspace directory will be kept. Only use to clean up containers which are not needed any more.</p>
+<pre><code>mlc-remove my-container
+</code></pre>
+<h3 id="update-ml-containers">Update ML Containers</h3>
+<p><strong>mlc-update-sys</strong> to update the container managment system to latest version.</p>
+<p>The container system and container repo will be updated to latest version. Run this command to check if new framework versions are available. On most systems privileged access (sudo password) is required to do so.</p>
+<pre><code>mlc-update-sys
+</code></pre>
+<h2 id="supported-ml-containers">Supported ML containers</h2>
+<h3 id="tensorflow-containers">Tensorflow Containers</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:center;">Container Name</th>
+<th style="text-align:center;">Build</th>
+<th style="text-align:center;">Tensorflow Version</th>
+<th style="text-align:center;">Ubuntu Version</th>
+<th style="text-align:center;">Python Version</th>
+<th style="text-align:center;">Package Manager</th>
+<th style="text-align:center;">CUDA Version</th>
+<th style="text-align:center;">CuDNN Version</th>
+<th style="text-align:center;">NVIDIA driver version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">2.14.0</td>
+<td style="text-align:center;">Official</td>
+<td style="text-align:center;">2.14.0</td>
+<td style="text-align:center;">22.04</td>
+<td style="text-align:center;">3.11.0rc1</td>
+<td style="text-align:center;">pip 23.2.1</td>
+<td style="text-align:center;">11.8.89</td>
+<td style="text-align:center;">8.6.0.163</td>
+<td style="text-align:center;">525.85.12</td>
+</tr>
+<tr>
+<td style="text-align:center;">2.13.1-aime</td>
+<td style="text-align:center;">AIME</td>
+<td style="text-align:center;">2.13.1</td>
+<td style="text-align:center;">22.04</td>
+<td style="text-align:center;">3.10.12</td>
+<td style="text-align:center;">pip 22.0.2</td>
+<td style="text-align:center;">11.8.89</td>
+<td style="text-align:center;">8.9.0.131</td>
+<td style="text-align:center;">520.61.05</td>
+</tr>
+<tr>
+<td style="text-align:center;">2.13.0</td>
+<td style="text-align:center;">Official</td>
+<td style="text-align:center;">2.13.0</td>
+<td style="text-align:center;">20.04</td>
+<td style="text-align:center;">3.8.10</td>
+<td style="text-align:center;">pip 23.0.1</td>
+<td style="text-align:center;">11.8.89</td>
+<td style="text-align:center;">8.6.0.163</td>
+<td style="text-align:center;">525.85.12</td>
+</tr>
+<tr>
+<td style="text-align:center;">2.12.0</td>
+<td style="text-align:center;">Official</td>
+<td style="text-align:center;">2.12.0</td>
+<td style="text-align:center;">20.04</td>
+<td style="text-align:center;">3.8.10</td>
+<td style="text-align:center;">pip 23.0.1</td>
+<td style="text-align:center;">11.8.89</td>
+<td style="text-align:center;">8.6.0.163</td>
+<td style="text-align:center;">525.85.12</td>
+</tr>
+<tr>
+<td style="text-align:center;">2.11.0-nvidia</td>
+<td style="text-align:center;">NVIDIA</td>
+<td style="text-align:center;">2.11.0</td>
+<td style="text-align:center;">20.04</td>
+<td style="text-align:center;">3.8.10</td>
+<td style="text-align:center;">pip 22.3.1</td>
+<td style="text-align:center;">12.0.146</td>
+<td style="text-align:center;">8.7.0.84</td>
+<td style="text-align:center;">525.85.12</td>
+</tr>
+<tr>
+<td style="text-align:center;">2.11.0-aime</td>
+<td style="text-align:center;">AIME</td>
+<td style="text-align:center;">2.11.0</td>
+<td style="text-align:center;">20.04</td>
+<td style="text-align:center;">3.8.10</td>
+<td style="text-align:center;">pip 20.0.2</td>
+<td style="text-align:center;">11.8.89</td>
+<td style="text-align:center;">8.6.0.163</td>
+<td style="text-align:center;">520.61.05</td>
+</tr>
+<tr>
+<td style="text-align:center;">2.10.1-nvidia</td>
+<td style="text-align:center;">NVIDIA</td>
+<td style="text-align:center;">2.10.1</td>
+<td style="text-align:center;">20.04</td>
+<td style="text-align:center;">3.8.10</td>
+<td style="text-align:center;">pip 22.3.1</td>
+<td style="text-align:center;">11.8.89</td>
+<td style="text-align:center;">8.7.0.84</td>
+<td style="text-align:center;">520.61.05</td>
+</tr>
+<tr>
+<td style="text-align:center;">2.10.0-nvidia</td>
+<td style="text-align:center;">NVIDIA</td>
+<td style="text-align:center;">2.10.0</td>
+<td style="text-align:center;">20.04</td>
+<td style="text-align:center;">3.8.10</td>
+<td style="text-align:center;">pip 22.2.2</td>
+<td style="text-align:center;">11.8.89</td>
+<td style="text-align:center;">8.6.0.163</td>
+<td style="text-align:center;">520.61.05</td>
+</tr>
+<tr>
+<td style="text-align:center;">2.9.1-nvidia</td>
+<td style="text-align:center;">NVIDIA</td>
+<td style="text-align:center;">2.9.1</td>
+<td style="text-align:center;">20.04</td>
+<td style="text-align:center;">3.8.10</td>
+<td style="text-align:center;">pip 22.2.2</td>
+<td style="text-align:center;">11.8.89</td>
+<td style="text-align:center;">8.6.0.163</td>
+<td style="text-align:center;">520.61.03</td>
+</tr>
+</tbody>
+</table>
+<h3 id="pytorch-containers">Pytorch Containers</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:center;">Container Name</th>
+<th style="text-align:center;">Build</th>
+<th style="text-align:center;">Pytorch</th>
+<th style="text-align:center;">Ubuntu Version</th>
+<th style="text-align:center;">Python Version</th>
+<th style="text-align:center;">Package Manager</th>
+<th style="text-align:center;">CUDA Version</th>
+<th style="text-align:center;">CuDNN Version</th>
+<th style="text-align:center;">NVIDIA driver version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">2.1.0-aime</td>
+<td style="text-align:center;">AIME</td>
+<td style="text-align:center;">2.1.0</td>
+<td style="text-align:center;">22.04</td>
+<td style="text-align:center;">3.10.12</td>
+<td style="text-align:center;">pip 22.0.2</td>
+<td style="text-align:center;">11.8.89</td>
+<td style="text-align:center;">8.9.0.131</td>
+<td style="text-align:center;">520.61.05</td>
+</tr>
+<tr>
+<td style="text-align:center;">2.1.0</td>
+<td style="text-align:center;">Official</td>
+<td style="text-align:center;">2.1.0</td>
+<td style="text-align:center;">22.04</td>
+<td style="text-align:center;">3.10.13</td>
+<td style="text-align:center;">conda 23.9.0</td>
+<td style="text-align:center;">12.1.105</td>
+<td style="text-align:center;">8.9.0.131</td>
+<td style="text-align:center;">530.30.02</td>
+</tr>
+<tr>
+<td style="text-align:center;">2.0.1-aime</td>
+<td style="text-align:center;">AIME</td>
+<td style="text-align:center;">2.0.1</td>
+<td style="text-align:center;">22.04</td>
+<td style="text-align:center;">3.10.12</td>
+<td style="text-align:center;">pip 22.0.2</td>
+<td style="text-align:center;">11.8.89</td>
+<td style="text-align:center;">8.9.0.131</td>
+<td style="text-align:center;">520.61.05</td>
+</tr>
+<tr>
+<td style="text-align:center;">2.0.1</td>
+<td style="text-align:center;">Official</td>
+<td style="text-align:center;">2.0.1</td>
+<td style="text-align:center;">20.04</td>
+<td style="text-align:center;">3.8.10</td>
+<td style="text-align:center;">pip 20.0.2</td>
+<td style="text-align:center;">11.8.89</td>
+<td style="text-align:center;">8.9.0.131</td>
+<td style="text-align:center;">520.61.05</td>
+</tr>
+<tr>
+<td style="text-align:center;">2.0.0</td>
+<td style="text-align:center;">Official</td>
+<td style="text-align:center;">2.0.0</td>
+<td style="text-align:center;">20.04</td>
+<td style="text-align:center;">3.8.10</td>
+<td style="text-align:center;">pip 20.0.2</td>
+<td style="text-align:center;">11.8.89</td>
+<td style="text-align:center;">8.6.0.163</td>
+<td style="text-align:center;">520.61.05</td>
+</tr>
+<tr>
+<td style="text-align:center;">1.14.0a-nvidia</td>
+<td style="text-align:center;">NVIDIA</td>
+<td style="text-align:center;">1.14.0a0</td>
+<td style="text-align:center;">20.04</td>
+<td style="text-align:center;">3.8.10</td>
+<td style="text-align:center;">pip 21.2.4</td>
+<td style="text-align:center;">12.0.146</td>
+<td style="text-align:center;">8.7.0.84</td>
+<td style="text-align:center;">525.85.11</td>
+</tr>
+<tr>
+<td style="text-align:center;">1.13.1-aime</td>
+<td style="text-align:center;">AIME</td>
+<td style="text-align:center;">1.13.1</td>
+<td style="text-align:center;">20.04</td>
+<td style="text-align:center;">3.8.10</td>
+<td style="text-align:center;">pip 20.0.2</td>
+<td style="text-align:center;">11.8.89</td>
+<td style="text-align:center;">8.6.0.163</td>
+<td style="text-align:center;">520.61.05</td>
+</tr>
+<tr>
+<td style="text-align:center;">1.13.0a-nvidia</td>
+<td style="text-align:center;">NVIDIA</td>
+<td style="text-align:center;">1.13.0a0</td>
+<td style="text-align:center;">20.04</td>
+<td style="text-align:center;">3.8.13</td>
+<td style="text-align:center;">pip 21.2.4</td>
+<td style="text-align:center;">11.8.89</td>
+<td style="text-align:center;">8.6.0.163</td>
+<td style="text-align:center;">520.61.03</td>
+</tr>
+<tr>
+<td style="text-align:center;">1.12.1-aime</td>
+<td style="text-align:center;">AIME</td>
+<td style="text-align:center;">1.12.1</td>
+<td style="text-align:center;">20.04</td>
+<td style="text-align:center;">3.8.10</td>
+<td style="text-align:center;">pip 20.0.2</td>
+<td style="text-align:center;">11.8.89</td>
+<td style="text-align:center;">8.6.0.163</td>
+<td style="text-align:center;">520.61.05</td>
+</tr>
+</tbody>
+</table>
+<h2 id="installation">Installation</h2>
+<p>AIME machines come pre installed with AIME machine learning container management system for more information see: https://www.aime.info/blog/deep-learning-framework-container-management/</p>
+
+        </div>
+        <style type='text/css'>body {
+  font: 400 16px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #111;
+  background-color: #fdfdfd;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-feature-settings: "kern" 1;
+  -moz-font-feature-settings: "kern" 1;
+  -o-font-feature-settings: "kern" 1;
+  font-feature-settings: "kern" 1;
+  font-kerning: normal;
+  padding: 30px;
+}
+
+@media only screen and (max-width: 600px) {
+  body {
+    padding: 5px;
+  }
+
+  body > #content {
+    padding: 0px 20px 20px 20px !important;
+  }
+}
+
+body > #content {
+  margin: 0px;
+  max-width: 900px;
+  border: 1px solid #e1e4e8;
+  padding: 10px 40px;
+  padding-bottom: 20px;
+  border-radius: 2px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+hr {
+  color: #bbb;
+  background-color: #bbb;
+  height: 1px;
+  flex: 0 1 auto;
+  margin: 1em 0;
+  padding: 0;
+  border: none;
+}
+
+/**
+ * Links
+ */
+a {
+  color: #0366d6;
+  text-decoration: none; }
+  a:visited {
+    color: #0366d6; }
+  a:hover {
+    color: #0366d6;
+    text-decoration: underline; }
+
+pre {
+  background-color: #f6f8fa;
+  border-radius: 3px;
+  font-size: 85%;
+  line-height: 1.45;
+  overflow: auto;
+  padding: 16px;
+}
+
+/**
+  * Code blocks
+  */
+
+code {
+  background-color: rgba(27,31,35,.05);
+  border-radius: 3px;
+  font-size: 85%;
+  margin: 0;
+  word-wrap: break-word;
+  padding: .2em .4em;
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+}
+
+pre > code {
+  background-color: transparent;
+  border: 0;
+  display: inline;
+  line-height: inherit;
+  margin: 0;
+  overflow: visible;
+  padding: 0;
+  word-wrap: normal;
+  font-size: 100%;
+}
+
+
+/**
+ * Blockquotes
+ */
+blockquote {
+  margin-left: 30px;
+  margin-top: 0px;
+  margin-bottom: 16px;
+  border-left-width: 3px;
+  padding: 0 1em;
+  color: #828282;
+  border-left: 4px solid #e8e8e8;
+  padding-left: 15px;
+  font-size: 18px;
+  letter-spacing: -1px;
+  font-style: italic;
+}
+blockquote * {
+  font-style: normal !important;
+  letter-spacing: 0;
+  color: #6a737d !important;
+}
+
+/**
+ * Tables
+ */
+table {
+  border-spacing: 2px;
+  display: block;
+  font-size: 14px;
+  overflow: auto;
+  width: 100%;
+  margin-bottom: 16px;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+td {
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+}
+
+th {
+  font-weight: 600;
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+}
+
+tr {
+  background-color: #fff;
+  border-top: 1px solid #c6cbd1;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f6f8fa;
+}
+
+/**
+ * Others
+ */
+
+img {
+  max-width: 100%;
+}
+
+p {
+  line-height: 24px;
+  font-weight: 400;
+  font-size: 16px;
+  color: #24292e; }
+
+ul {
+  margin-top: 0; }
+
+li {
+  color: #24292e;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5; }
+
+li + li {
+  margin-top: 0.25em; }
+
+* {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  color: #24292e; }
+
+a:visited {
+  color: #0366d6; }
+
+h1, h2, h3 {
+  border-bottom: 1px solid #eaecef;
+  color: #111;
+  /* Darker */ }</style>
+      </body>
+    </html>
