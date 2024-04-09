@@ -22,16 +22,14 @@ Easily install, run and manage Docker containers for the most common deep learni
 
 | Container Name | Build  | Tensorflow Version | Ubuntu Version | Python Version | Package Manager | ROCM Version | MIOpen Version |
 |:----------------:|:--------:|:--------------------:|:----------------:|:----------------:|:-----------------:|:--------------:|:---------------:|
-| 2.11.0  | AMD | 2.11.0             | 20.04          | 3.8.10         | pip 20.0.2      | 5.4.2     | 2.19.0      |
+| 2.13.1  | AMD | 2.13.1             | 20.04          | 3.10.13         | pip 24.0      | 6.0.2     | 3.00.0      |
 
 ### Pytorch Containers
 
 | Container Name | Build  | Pytorch  | Ubuntu Version | Python Version | Package Manager | ROCM Version | MIOpen Version |
 |:----------------:|:--------:|:----------:|:----------------:|:----------------:|:-----------------:|:--------------:|:---------------:|
-| 2.0.1 | AMD | 2.0.1 | 22.04          | 3.10.13         | pip 20.1.1      | 5.7.0      | 2.20.0    |
-| 2.0.0dev230301 | Nightly | 2.0.0dev230301 | 20.04          | 3.8.10         | pip 20.0.2      | 5.4.2      | 2.19.0    |
-| 1.13.1 | Official | 1.13.1 | 20.04          | 3.8.10         | pip 20.0.2      | 5.2.0     | 2.17.0    |
-| 1.12.1 | AMD | 1.12.1 | 20.04          | 3.8.10         | pip 20.1.1      | 5.4.2      | 2.19.0    |
+| 2.1.2 | AMD | 2.1.2 | 22.04          | 3.10.13        | pip 24.0.1      | 6.0.2      | 3.00.0    |
+| 2.0.1 | AMD | 2.0.1 | 20.04          | 3.9.18         | pip 20.1.1      | 6.0.0      | 3.00.0    |
 
 ## Usage
 
@@ -45,17 +43,16 @@ Available frameworks:
 
 Tensorflow, Pytorch
 
-Available versions for AMD CDNA based GPUs (Radeon VII, Instinct MI50/MI100):
+Available versions for AMD based GPUs: AMD Radeon VII, AMD RX 7900 XTX, AMD Instinct MI50/MI100/MI210 and possibly MI300?
+*  Tensorflow: 2.13.1
 
-*  Tensorflow: 2.11.0
-
-*  Pytorch: 2.0.0dev230301, 1.13.1, 1.12.1
+*  Pytorch: 2.1.2, 2.0.1 
 
 
-Example to create a container with the name 'my-container' as Tensorflow 2.11 with mounted user home directory as workspace use:
+Example to create a container with the name 'my-container' as Tensorflow 2.13.1 with mounted user home directory as workspace use:
 
 ```
-> mlc-create my-container Tensorflow 2.11.0 -w=/home/admin
+> mlc-create my-container Tensorflow 2.13.1 -w=/home/admin
 ```
 
 
