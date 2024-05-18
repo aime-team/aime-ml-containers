@@ -28,6 +28,7 @@ Easily install, run and manage Docker containers for the most common deep learni
 
 | Container Name | Build  | Pytorch  | Ubuntu Version | Python Version | Package Manager | ROCM Version | MIOpen Version |
 |:----------------:|:--------:|:----------:|:----------------:|:----------------:|:-----------------:|:--------------:|:---------------:|
+| 2.1.2-amd | AMD | 2.1.2 | 22.04          | 3.10.14        | pip 24.0      | 6.1.0      | 3.1.0    |
 | 2.1.2 | AMD | 2.1.2 | 22.04          | 3.10.13        | pip 24.0.1      | 6.0.2      | 3.00.0    |
 | 2.0.1 | AMD | 2.0.1 | 20.04          | 3.9.18         | pip 20.1.1      | 6.0.0      | 3.00.0    |
 
@@ -43,10 +44,10 @@ Available frameworks:
 
 Tensorflow, Pytorch
 
-Available versions for AMD based GPUs: AMD Radeon VII, AMD RX 7900 XTX, AMD Instinct MI50/MI100/MI210 and possibly MI300?
+Available versions for AMD based GPUs: AMD Radeon VII, AMD RX 7900 XTX, AMD Instinct MI50/MI100/MI210 and MI300X
 *  Tensorflow: 2.13.1
 
-*  Pytorch: 2.1.2, 2.0.1 
+*  Pytorch: 2.1.2-amd, 2.1.2, 2.0.1 
 
 
 Example to create a container with the name 'my-container' as Tensorflow 2.13.1 with mounted user home directory as workspace use:
