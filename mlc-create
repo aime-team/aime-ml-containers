@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# AIME MLC - Machine Learning Container Management 
+# 
+# Copyright (c) AIME GmbH and affiliates. Find more info at https://www.aime.info/mlc 
+# 
+# This software may be used and distributed according to the terms of the MIT LICENSE 
+
 MLC_VERSION=3
 INTERACTIVE=false
 GPUS="all"
