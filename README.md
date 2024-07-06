@@ -2,7 +2,7 @@
 
 AIME machine learning container management system.
 
-Easily install, run and manage Docker containers for the most common deep learning frameworks.
+Easily install, run and manage Docker containers for Pytorch and Tensorflow deep learning frameworks.
 
 ## Features
 
@@ -195,4 +195,6 @@ mlc-update-sys
 
 ## Installation
 
-AIME machines come pre installed with AIME machine learning container management system for more information see: https://www.aime.info/blog/deep-learning-framework-container-management/
+AIME machines come pre installed with AIME machine learning container management system for more information see: https://www.aime.info/mlc
+
+Please read on in the [AIME MLC Installation Guide](aime-mlc-installation-guide.md) how to install AIME MLC on your PC, workstation or server.
