@@ -2,7 +2,7 @@
 
 AIME machine learning container management system.
 
-Easily install, run and manage Docker containers for the most common deep learning frameworks.
+Easily install, run and manage Docker containers for Pytorch and Tensorflow deep learning frameworks.
 
 ## Features
 
@@ -32,7 +32,7 @@ Available versions for NVIDIA Ada Lovelace based GPUs (RTX 4080/4090, RTX 4500/5
 
 *  Tensorflow: 2.14.0, 2.13.1-aime, 2.13.0, 2.12.0, 2.11.0-nvidia, 2.11.0-aime, 2.10.1-nvidia, 2.10.0-nvidia, 2.9.1-nvidia
 
-*  Pytorch: 2.3.1-aime, 2.3.0, 2.2.0, 2.1.2-aime, 2.1.1-aime, 2.1.0-aime, 2.1.0, 2.0.1-aime, 2.0.1, 2.0.0, 1.14.0a-nvidia, 1.13.1-aime, 1.13.0a-nvidia, 1.12.1-aime
+*  Pytorch: 2.3.1-aime, 2.3.0, 2.2.2, 2.2.0, 2.1.2-aime, 2.1.1-aime, 2.1.0-aime, 2.1.0, 2.0.1-aime, 2.0.1, 2.0.0, 1.14.0a-nvidia, 1.13.1-aime, 1.13.0a-nvidia, 1.12.1-aime
 
 
 Example to create a container with the name 'my-container' as Tensorflow 2.12.0 with mounted user home directory as workspace use:
@@ -178,6 +178,7 @@ mlc-update-sys
 |:----------------:|:--------:|:----------:|:----------------:|:----------------:|:-----------------:|:--------------:|:---------------:|:-----------------------:|
 | 2.3.1-aime | AIME | 2.3.1 | 22.04 | 3.10.12 | pip 22.0.2 | 12.1.105 | 8.9.7.29 | 530.30.02 |
 | 2.3.0 | Official | 2.3.0 | 22.04 | 3.10.14 | conda 23.5.2 | 12.1.105 | 8.9.7.29 | 530.30.02 |
+| 2.2.2 | AIME | 2.2.2 | 22.04 | 3.10.12 | pip 22.0.2 | 12.1.105 | 8.9.7.29 | 530.30.02 |
 | 2.2.0 | Official | 2.2.0 | 22.04 | 3.10.13 | conda 23.9.0 | 12.1.105 | 8.9.0.131 | 530.30.02 | 
 | 2.1.2-aime | AIME | 2.1.2 | 22.04 | 3.10.12 | pip 22.0.2 | 12.1.105 | 8.9.0.131 | 530.30.02 |
 | 2.1.1-aime | AIME | 2.1.1 | 22.04 | 3.10.12 | pip 22.0.2 | 12.1.105 | 8.9.0.131 | 530.30.02 |
@@ -194,4 +195,6 @@ mlc-update-sys
 
 ## Installation
 
-AIME machines come pre installed with AIME machine learning container management system for more information see: https://www.aime.info/blog/deep-learning-framework-container-management/
+AIME machines come pre installed with AIME machine learning container management system for more information see: https://www.aime.info/mlc
+
+Please read on in the [AIME MLC Installation Guide](aime-mlc-installation-guide.md) how to install AIME MLC on your PC, workstation or server.

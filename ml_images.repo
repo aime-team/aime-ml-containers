@@ -34,6 +34,7 @@ Tensorflow, 1.14.0, CUDA, aimehub/tensorflow-1.14.0-cuda
 Tensorflow, 1.13.2, CUDA, aimehub/tensorflow-1.13.2-cuda
 Pytorch, 2.3.1-aime, CUDA_ADA, aimehub/pytorch-2.3.1-aime-cuda12.1
 Pytorch, 2.3.0, CUDA_ADA, aimehub/pytorch-2.3.0-cuda12.1
+Pytorch, 2.2.2, CUDA_ADA, aimehub/pytorch-2.2.2-cuda12.1
 Pytorch, 2.2.0, CUDA_ADA, aimehub/pytorch-2.2.0-cuda12.1
 Pytorch, 2.1.2-aime, CUDA_ADA, aimehub/pytorch-2.1.2-aime-cuda12.1
 Pytorch, 2.1.1-aime, CUDA_ADA, aimehub/pytorch-2.1.1-aime-cuda12.1
