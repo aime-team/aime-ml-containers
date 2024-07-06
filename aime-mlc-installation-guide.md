@@ -16,13 +16,13 @@ A ROCM based installation guide for AIME MLC is currently in preparation.
 For NVIDIA GPUs, the following components are required to be installed in this order:
 
 
-1. [NVIDIA CUDA](https://developer.nvidia.com/cuda-downloads): the installation of CUDA and compatible NVIDIA GPU drivers 
+1. [NVIDIA CUDA](#1-cuda-drivers-installationreinstallation): the installation of CUDA and compatible NVIDIA GPU drivers 
 
-2. [Docker Engine](https://docs.docker.com/engine/install/ubuntu/): the basic interface to create and manage containers 
+2. [Docker Engine](#2-docker-ce-engine-installation): the basic interface to create and manage containers 
 
-3. [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html): this toolkit allows you to use the GPU within a Docker container 
+3. [NVIDIA Container Toolkit](#3-nvidia-container-toolkit-installation): this toolkit allows you to use the GPU within a Docker container 
 
-4. The [AIME ML Container solution](https://github.com/aime-team/aime-ml-containers.git) we offer to create and manage containers with the AI frameworks Pytorch and Tensorflow 
+4. The [AIME ML Container solution](#4-aime-ml-containers-mlc-installationuninstallation) we offer to create and manage containers with the AI frameworks Pytorch and Tensorflow 
 
 
 
