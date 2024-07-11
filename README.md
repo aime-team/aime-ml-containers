@@ -16,6 +16,12 @@ Easily install, run and manage Docker containers for Pytorch and Tensorflow deep
 * Runs with the same performance as a bare metal installation
 * Repository of all major deep learning framework versions as containers
 
+## Installation
+
+AIME machines come pre installed with AIME machine learning container management system for more information see: https://www.aime.info/mlc
+
+Please read on in the [AIME MLC Installation Guide](aime-mlc-installation-guide.md) how to install AIME MLC on your PC, workstation or server.
+
 ## Usage
 
 ### Create a machine learning container
@@ -193,8 +199,4 @@ mlc-update-sys
 | 1.12.1-aime    | AIME     | 1.12.1            | 20.04          | 3.8.10         | pip 20.0.2      | 11.8.89      | 8.6.0.163     | 520.61.05             |
 
 
-## Installation
 
-AIME machines come pre installed with AIME machine learning container management system for more information see: https://www.aime.info/mlc
-
-Please read on in the [AIME MLC Installation Guide](aime-mlc-installation-guide.md) how to install AIME MLC on your PC, workstation or server.
