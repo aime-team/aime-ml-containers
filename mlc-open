@@ -33,7 +33,7 @@ function get_container_active {
   EXIT_CODE=$?
   OUT=$(echo -e "$OUT" | wc -l)
 #  echo "Returned: $EXIT_CODE $OUT"
-  if [ $EXIT_CODE == "0" ] && [ $OUT -gt 3 ]
+  if [ $EXIT_CODE == "0" ] && [ $OUT -gt 2 ]
   then
     echo "True"
   else
