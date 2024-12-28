@@ -36,9 +36,9 @@ Tensorflow, Pytorch
 
 Available versions for NVIDIA Ada Lovelace based GPUs (RTX 4080/4090, RTX 4500/5000/6000 Ada, L40, L40S):
 
-*  Tensorflow: 2.14.0, 2.13.1-aime, 2.13.0, 2.12.0, 2.11.0-nvidia, 2.11.0-aime, 2.10.1-nvidia, 2.10.0-nvidia, 2.9.1-nvidia
+*  Tensorflow: 2.16.1, 2.15.0, 2.14.0, 2.13.1-aime, 2.13.0, 2.12.0, 2.11.0-nvidia, 2.11.0-aime, 2.10.1-nvidia, 2.10.0-nvidia, 2.9.1-nvidia
 
-*  Pytorch: 2.3.1-aime, 2.3.0, 2.2.2, 2.2.0, 2.1.2-aime, 2.1.1-aime, 2.1.0-aime, 2.1.0, 2.0.1-aime, 2.0.1, 2.0.0, 1.14.0a-nvidia, 1.13.1-aime, 1.13.0a-nvidia, 1.12.1-aime
+*  Pytorch: 2.5.0, 2.4.0, 2.3.1-aime, 2.3.0, 2.2.2, 2.2.0, 2.1.2-aime, 2.1.1-aime, 2.1.0-aime, 2.1.0, 2.0.1-aime, 2.0.1, 2.0.0, 1.14.0a-nvidia, 1.13.1-aime, 1.13.0a-nvidia, 1.12.1-aime
 
 
 Example to create a container with the name 'my-container' as Tensorflow 2.12.0 with mounted user home directory as workspace use:
@@ -168,6 +168,8 @@ mlc-update-sys
 
 | Container Name | Build  | Tensorflow Version | Ubuntu Version | Python Version | Package Manager | CUDA Version | CuDNN Version | NVIDIA driver version |
 |:----------------:|:--------:|:--------------------:|:----------------:|:----------------:|:-----------------:|:--------------:|:---------------:|:-----------------------:|
+| 2.16.1 | Official | 2.16.1 | 22.04 | 3.11.0rc1 | pip 24.0 | 12.3.107 | 8.9.6.50 | 545.23.06 |
+| 2.15.0 | Official | 2.15.0 | 22.04 | 3.11.0rc1 | pip 23.3.1 | 12.3.103 | 8.9.6.50 | 545.23.06 |
 | 2.14.0 | Official | 2.14.0 | 22.04 | 3.11.0rc1 | pip 23.2.1 | 11.8.89 | 8.6.0.163 | 525.85.12 |
 | 2.13.1-aime | AIME | 2.13.1 | 22.04 | 3.10.12 | pip 22.0.2 | 11.8.89 | 8.9.0.131 | 520.61.05 |
 | 2.13.0 | Official | 2.13.0 | 20.04 | 3.8.10 | pip 23.0.1 | 11.8.89 | 8.6.0.163 | 525.85.12 |
@@ -182,6 +184,8 @@ mlc-update-sys
 
 | Container Name | Build  | Pytorch  | Ubuntu Version | Python Version | Package Manager | CUDA Version | CuDNN Version | NVIDIA driver version |
 |:----------------:|:--------:|:----------:|:----------------:|:----------------:|:-----------------:|:--------------:|:---------------:|:-----------------------:|
+| 2.5.0 | Official | 2.5.0 | 22.04 | 3.11.10 | conda 24.9.2 | 12.1.105 | 9.1.0 | 530.30.02 |
+| 2.4.0 | Official | 2.4.0 | 22.04 | 3.11.9 | conda 24.5 | 12.1.105 | 9.1.0 | 530.30.02 |
 | 2.3.1-aime | AIME | 2.3.1 | 22.04 | 3.10.12 | pip 22.0.2 | 12.1.105 | 8.9.7.29 | 530.30.02 |
 | 2.3.0 | Official | 2.3.0 | 22.04 | 3.10.14 | conda 23.5.2 | 12.1.105 | 8.9.7.29 | 530.30.02 |
 | 2.2.2 | AIME | 2.2.2 | 22.04 | 3.10.12 | pip 22.0.2 | 12.1.105 | 8.9.7.29 | 530.30.02 |
