@@ -34,7 +34,7 @@ Available versions for NVIDIA Ampere based GPUs (RTX 30x0, RTX A5000/A6000, A40,
 
 *  MXNet: 1.8.0-nvidia
 
-*  Pytorch: 2.5.0, 2.4.0, 2.3.1-aime, 2.3.0, 2.2.0, 2.1.2-aime, 2.1.1-aime, 2.1.0-aime, 2.1.0, 2.0.1-aime, 2.0.1, 2.0.0, 1.13.1, 1.13.0, 1.12.1-jlab, 1.12.1, 1.12.0, 1.11.0, 1.10.2-aime, 1.10.0, 1.9.0, 1.8.0, 1.7.1, 1.7.0, 1.7.0-nvidia
+*  Pytorch: 2.5.1, 2.5.0, 2.4.0, 2.3.1-aime, 2.3.0, 2.2.0, 2.1.2-aime, 2.1.1-aime, 2.1.0-aime, 2.1.0, 2.0.1-aime, 2.0.1, 2.0.0, 1.13.1, 1.13.0, 1.12.1-jlab, 1.12.1, 1.12.0, 1.11.0, 1.10.2-aime, 1.10.0, 1.9.0, 1.8.0, 1.7.1, 1.7.0, 1.7.0-nvidia
 
 
 Example to create a container with the name 'my-container' as Tensorflow 1.15.4 with mounted user home directory as workspace use:
