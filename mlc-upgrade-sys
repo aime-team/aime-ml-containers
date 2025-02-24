@@ -20,17 +20,18 @@ then
     echo ""
     echo -e "Use mlc --help in the command line or visit https://www.aime.info/blog/en/deep-learning-framework-container-management/ to explore the new features."
     echo ""
-    exit 1
+    exit 0
 fi
 
 while true; do
     echo ""
-    read -p "Starting the upgrade from AIME MLC v1 to AIME MLC v2.\nAll files and folders in $UPGRADE_DIR will be deleted.\nIf you have manually copied or moved any important data into this folder, please back it up before proceeding.\nDo you want to continue? (Y/N): " -n 1 -r
+    echo -e "Starting the upgrade from AIME MLC v1 to AIME MLC v2.\nAll files and folders in $UPGRADE_DIR will be deleted.\nIf you have manually copied or moved any important data into this folder, please back it up before proceeding."
+    read -p "Do you want to continue (Y/N)?: " -n 1 -r
     echo ""
     if [[ $REPLY =~ ^[Yy]$ ]]; then
-        break  # Proceed with the update
+        break  
     elif [[ $REPLY =~ ^[Nn]$ ]]; then
-        exit 0  # Exit if user says no
+        exit 0  
     else
         echo "Invalid input. Please enter Y or N."
         echo ""
@@ -61,7 +62,7 @@ echo ""
 # Delete the empty directory ./aime-mlc
 rmdir $UPGRADE_DIR/aime-mlc/
 
-echo -e "Upgraded AIME MLC from v1 to v2."
+echo -e "Upgrade from AIME MLC v1 to v2 completed successfully."
 echo ""
 echo -e "Use mlc --help in the command line or visit https://www.aime.info/blog/en/deep-learning-framework-container-management/ to explore the new features."
 echo ""
