@@ -23,9 +23,10 @@ then
     exit 0
 fi
 
+echo ""
+echo -e "Starting the upgrade from AIME MLC v1 to AIME MLC v2.\nAll files and folders in $UPGRADE_DIR will be deleted.\nIf you have manually copied or moved any important data into this folder, please back it up before proceeding."
+
 while true; do
-    echo ""
-    echo -e "Starting the upgrade from AIME MLC v1 to AIME MLC v2.\nAll files and folders in $UPGRADE_DIR will be deleted.\nIf you have manually copied or moved any important data into this folder, please back it up before proceeding."
     read -p "Do you want to continue (Y/N)?: " -n 1 -r
     echo ""
     if [[ $REPLY =~ ^[Yy]$ ]]; then
@@ -38,6 +39,7 @@ while true; do
     fi
 done
 
+echo ""
 echo -e "Deleting the previous version files of AIME MLC v1 from $UPGRADE_DIR..."
 echo ""
 
