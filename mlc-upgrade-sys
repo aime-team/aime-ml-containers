@@ -18,7 +18,7 @@ then
     echo ""
     echo "AIME MLC system has already been upgraded."
     echo ""
-    echo -e "Use mlc --help in the command line or visit https://www.aime.info/blog/en/deep-learning-framework-container-management/ to explore the new features."
+    echo -e "Use mlc --help in the command line or visit https://www.aime.info/mlc to explore the new features."
     echo ""
     exit 0
 fi
@@ -66,5 +66,5 @@ rmdir $UPGRADE_DIR/aime-mlc/
 
 echo -e "Upgrade from AIME MLC v1 to v2 completed successfully."
 echo ""
-echo -e "Use mlc --help in the command line or visit https://www.aime.info/blog/en/deep-learning-framework-container-management/ to explore the new features."
+echo -e "Use mlc --help in the command line or visit https://www.aime.info/mlc to explore the new features."
 echo ""
