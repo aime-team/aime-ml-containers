@@ -23,6 +23,13 @@ then
     exit 0
 fi
 
+#Check if sudo rights are needed:
+SUDO="sudo"
+if [ -w "$UPGRADE_DIR" ] 
+then
+  SUDO=""
+fi
+
 echo ""
 echo -e "Starting the upgrade from AIME MLC v1 to AIME MLC v2.\nAll files and folders in $UPGRADE_DIR will be deleted.\nIf you have manually copied or moved any important data into this folder, please back it up before proceeding."
 
@@ -44,7 +51,7 @@ echo -e "Deleting the previous version files of AIME MLC v1 from $UPGRADE_DIR...
 echo ""
 
 # Remove all files and folders except for the mlc-upgrade-sys script itself
-find "$UPGRADE_DIR" -mindepth 1 ! -name "$(basename "$UPGRADE_PATH")" -exec rm -rf {} +
+$SUDO find "$UPGRADE_DIR" -mindepth 1 ! -name "$(basename "$UPGRADE_PATH")" -exec rm -rf {} +
 
 echo -e "Installing the latest version files of AIME MLC v2..."
 echo ""
@@ -53,16 +60,16 @@ echo ""
 REPO_MLCV2="https://github.com/aime-team/aime-mlc"
 
 # Clone the repository into the script's directory
-git clone $REPO_MLCV2 "$UPGRADE_DIR/aime-mlc"
+$SUDO git clone $REPO_MLCV2 "$UPGRADE_DIR/aime-mlc"
 
-mv $UPGRADE_DIR/aime-mlc/{*,.*} $UPGRADE_DIR/ 2>/dev/null
+$SUDO mv $UPGRADE_DIR/aime-mlc/{*,.*} $UPGRADE_DIR/ 2>/dev/null
 
 echo ""
 echo -e "Deleting unnecesary files and directories..."
 echo ""
 
 # Delete the empty directory ./aime-mlc
-rmdir $UPGRADE_DIR/aime-mlc/
+$SUDO rmdir $UPGRADE_DIR/aime-mlc/
 
 echo -e "Upgrade from AIME MLC v1 to v2 completed successfully."
 echo ""
