@@ -1,3 +1,25 @@
+# ⚠️ Deprecated: AIME ML Containers v1
+
+This repository is no longer maintained and has been deprecated in favor of [AIME MLC v2](https://github.com/aime-team/aime-mlc).
+
+## 📢 What does it mean?
+
+* No further updates, bug fixes, or security patches will be provided.
+* Users are encouraged to migrate to AIME MLC v2 for improved functionality, performance, and support.
+
+## 🚀 Upgrade to AIME ML Container v2
+
+To upgrade to the latest version, follow the migration guide:
+👉 [Migration from AIME MLC v1 to v2](https://www.aime.info/mlc)
+
+📂 The new repository for AIME MLC v2 is available here:
+🔗 [AIME MLC v2 Repository](https://github.com/aime-team/aime-mlc)
+
+For any questions or assistance, please refer to the official documentation or open an issue in the new repository.
+
+Thank you for your support! 🚀
+
+
 # AIME ML Containers
 
 AIME machine learning container management system.
