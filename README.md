@@ -10,14 +10,17 @@ This repository is no longer maintained and has been deprecated in favor of [AIM
 ## 🚀 Upgrade to AIME ML Container v2
 
 To upgrade to the latest version, follow the migration guide:
+
 👉 [Migration from AIME MLC v1 to v2](https://www.aime.info/mlc)
 
-📂 The new repository for AIME MLC v2 is available here:
+The new repository for AIME MLC v2 is available here:
+
 🔗 [AIME MLC v2 Repository](https://github.com/aime-team/aime-mlc)
 
 For any questions or assistance, please refer to the official documentation or open an issue in the new repository.
 
 Thank you for your support! 🚀
+
 
 
 # AIME ML Containers
