@@ -69,7 +69,7 @@ then
     exit -1
   fi
 
-  echo -e "Update(s) availabe.\n\nChange Log:\n$UPDATE_LOG\n"
+  echo -e "Update(s) available.\n\nChange Log:\n$UPDATE_LOG\n"
 
   read -p "Update ML container system? (Y/N) " -n 1 -r
   echo 
@@ -84,6 +84,8 @@ fi
 {
   echo -e "\nUpdating ML container system ... \n"
   $SUDO git pull origin $BRANCH
+  echo ""
+  echo -e "AIME MLC v2 is now available. To upgrade, use:\nmlc-upgrade-sys\n"
   exit 1
 } 
 
