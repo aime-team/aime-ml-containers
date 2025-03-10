@@ -47,7 +47,7 @@ Tensorflow, Pytorch
 Available versions for AMD based GPUs: AMD Radeon VII, AMD RX 7900 XTX, AMD Instinct MI50/MI100/MI210 and MI300X
 *  Tensorflow: 2.13.1
 
-*  Pytorch: 2.1.2-amd, 2.1.2, 2.0.1 
+*  Pytorch: 2.6.0, 2.5.1, 2.1.2-amd, 2.1.2, 2.0.1 
 
 
 Example to create a container with the name 'my-container' as Tensorflow 2.13.1 with mounted user home directory as workspace use:
