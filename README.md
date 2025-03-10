@@ -28,6 +28,8 @@ Easily install, run and manage Docker containers for the most common deep learni
 
 | Container Name | Build  | Pytorch  | Ubuntu Version | Python Version | Package Manager | ROCM Version | MIOpen Version |
 |:----------------:|:--------:|:----------:|:----------------:|:----------------:|:-----------------:|:--------------:|:---------------:|
+| 2.6.0 | Official | 2.6.0 | 22.04          | 3.10.12        | pip 22.0.2      | 6.2.4      | 3.2.0    |
+| 2.5.1 | Official | 2.5.1 | 22.04          | 3.10.12        | pip 22.0.2      | 6.2.4      | 3.2.0    |
 | 2.1.2-amd | AMD | 2.1.2 | 22.04          | 3.10.14        | pip 24.0      | 6.1.0      | 3.1.0    |
 | 2.1.2 | AMD | 2.1.2 | 22.04          | 3.10.13        | pip 24.0.1      | 6.0.2      | 3.00.0    |
 | 2.0.1 | AMD | 2.0.1 | 20.04          | 3.9.18         | pip 20.1.1      | 6.0.0      | 3.00.0    |
