@@ -68,7 +68,7 @@ then
   UPDATE_LOG=$($SUDO git log HEAD..origin/$BRANCH --pretty=format:" - %s")
   if [[ $UPDATE_LOG == "" ]]
   then
-    echo -e "ML container system is up to date.\n"
+    echo -e "Attention:\nAIME ML Containers v1 is no longer maintained and has been deprecated in favor of AIME MLC v2.\nTo upgrade, use:\nmlc-upgrade-sys\n"
     exit -1
   fi
 
@@ -87,7 +87,7 @@ fi
 {
   echo -e "\nUpdating ML container system ... \n"
   $SUDO git pull origin $BRANCH
-  echo ""
+  echo -e ""
   echo -e "AIME MLC v2 is now available. To upgrade, use:\nmlc-upgrade-sys\n"
   exit 1
 } 
